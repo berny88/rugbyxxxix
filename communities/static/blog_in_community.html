@@ -1,0 +1,113 @@
+﻿<div class="jumbotron" ng-init="getCommunity()">
+    <a href="javascript:history.back()">Back</a>
+
+    <br/>
+
+    <div class="container">
+
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <div class="pull-left">
+                        <h4>Blog of the community</h4>
+                    </div>
+                    <div class="pull-right"></div>
+                    <div class="clearfix"></div>
+                </h4>
+            </div>
+            <div class="panel-body">
+
+                <div class="col-md-12   ">
+                    <div class="topbar">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-s-4">
+                                    <h1 ng-click="selectTab('CommunitiesCtrl')" class="push-left">{{title}}</h1>
+                                </div>
+                                <div class="offset-s-4 col-s-4">
+                                    <nav role='navigation' class="push-right">
+                                        <ul>
+                                            <li ng-click="selectTab('CommunitiesCtrl')">See all the posts</li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="container" style="width:100%">
+                        <div class="row">
+                            <ul class="post-grid" ng-show="isSelected('CommunitiesCtrl')">
+                                <li ng-repeat="post in posts" class="col-s-4"
+                                    ng-class="{ 'reset-s' : $index%3==0 }"
+                                    ng-click="selectTab($index)" >
+                                    <h3>{{post.title}}</h3>
+                                    <p>{{post.body[0] | limitTo:70}}...</p>
+                                    <p><h4><cite>by {{post.author}} on {{post.createdOn | date:'dd/MM/yy HH:mm'}}</cite></h4></p>
+                                    <p class="fas fa-comment push-left"> {{post.comments.length}}
+                                    </p>
+                                </li>
+                            </ul>
+                            <div class="post" ng-repeat="post in posts" ng-show="isSelected($index)">
+                                    <span>
+                                        <h2>{{post.title}}</h2>
+                                        <cite>by {{post.author}} on {{post.createdOn | date:'dd/MM/yy HH:mm'}}</cite>
+                                        <div class="post-body">
+                                            <p ng-repeat="paragraph in post.body">
+                                                <span ng-bind-html="paragraph | linky:'_blank'"></span>
+                                            </p>
+                                        </div>
+                                        <p class="fas fa-comment push-left"> {{post.comments.length}}
+                                        </p>
+                                        <h3><span class="">
+                                                <a class="label label-info pull-right"
+                                                   ng-click="selectTab('CommunitiesCtrl')">See all the posts again</a>
+                                            </span>
+                                        </h3>
+                                        <div class="comments">
+                                            <h3>Comments</h3>
+                                            <ul>
+                                                <li ng-repeat="comment in post.comments">
+                                                    "<span ng-bind-html="comment.body | linky:'_blank'"></span>"
+                                                    <cite>- <b>{{comment.author}}</b> on {{comment.createdOn | date:'dd/MM/yy HH:mm'}}</cite>
+                                                </li>
+                                            </ul>
+                                            <div ng-show="!isConnected()">
+                                                <h4 class="text-center">You must be logged in to post messages :
+                                                    <a href="/#!/signin?callback=blog_in_community/{{community.community.com_id}}">here</a>.</h4>
+                                            </div>
+
+                                            <form name="commentForm" ng-submit="addComment(post)" class="form-horizontal"
+                                                  ng-show="isConnected()">
+                                                <div class="form-group required">
+                                                    <div class="col-xs-12">
+                                                        <label for="add_comment">Add a comment</label>
+                                                        <textarea ng-model="comment.body" cols="30" rows="10" required
+                                                                  class="form-control" required="required" id="add_comment"></textarea>
+                                                    </div>
+                                                </div>
+                                                <input type="submit" value="Sauvegarder" class="btn btn-success pull-right"
+                                                       ng-show="isConnected()"/>
+                                            </form>
+
+
+
+                                        </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            </div>
+        </div>
+
+    <a href="javascript:history.back()">Back</a>
+
+    </div>
+</div>
+
+<!--<div ng-include src="'static/js/piwik.js'"></div>-->

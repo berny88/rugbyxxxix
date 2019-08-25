@@ -1,0 +1,66 @@
+<!-- include the modals -->
+<div ng-include src="'static/lib/modals/modals.html'"></div>
+
+<div class="jumbotron">
+    <div class="container">
+
+        <div class="row-fluid" >
+            <h1><center>Place your bets !</center></h1>
+        </div>
+
+        <div class="alert alert-info" role="alert"><span class="glyphicon glyphicon-info-sign"></span> Choose your community and bet! If you feel like a leader, create your community :-)</div>
+
+        <div class="row-fluid" >
+            <div class="col-md-12 pull-right">
+                <div ng-show="isConnected()"><a class="btn btn-info btn-lg pull-right" href="#!/create_community">
+                    <i class="glyphicon glyphicon-plus"></i> Create your<br/>community</a>
+                </div>
+                <div ng-show="!isConnected()"><a class="btn btn-default btn-lg pull-right" href="#!/signin">Connection<br/>(comm. creation)</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row-fluid" >
+            <div class="col-xs-12">
+                <div id="no-more-tables" class="table-responsive">
+                    <table class="table table-condensed table-striped">
+                        <thead>
+                        <tr>
+                            <!--<th class="id">Id</th>-->
+                            <th class="title">
+                                <a ng-click="sortType='title';sortReverse=!sortReverse">Title<span ng-show="sortType=='title'&&!sortReverse" class="glyphicon glyphicon-chevron-down"></span><span ng-show="sortType=='title' && sortReverse" class="glyphicon glyphicon-chevron-up"></span></a>
+                            </th>
+                            <th class="description">Description</th>
+                            <th class="numberOfPlayers"></th>
+                            <th class="administrator">Administrator</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody ng-init="getCommunities();">
+                        <tr ng-repeat="community in communities.communities | filter : community_filter | orderBy:sortType:sortReverse">
+                            <!--<td>{{community.com_id}}</td>-->
+                            <td data-title="Title">{{community.title}}</td>
+                            <td data-title="Desc.">{{community.description}}</td>
+                            <td data-title="# Bettors"><span class="badge" ng-init="getNumberOfPlayersInCommunity(community.com_id)" id="nbPlayers_{{ community.com_id }}"></span></td>
+                            <td data-title="Admin.">{{community.admin_user_nickName}}</td>
+                            <td>
+                                <span><a class="btn btn-danger" href="#!/bet_in_community/{{community.com_id}}"><i class="fas fa-coins" aria-hidden="true"></i> Bet !</a></span>
+                                <span><a class="btn btn-success" href="#!/view_community/{{community.com_id}}"><i class="fas fa-chart-line" aria-hidden="true"></i> Stats</a></span>
+                                <!-- <span><a class="btn btn-info" href="#!/blog_in_community/{{community.com_id}}"><i class="glyphicon glyphicon-bullhorn"></i> Blog</a></span> -->
+                            </td>
+                            <td>
+                                <span ng-show="hasAuthorization(community)"><a class="btn btn-danger" ng-click="deleteCommunity(community)"><i class="glyphicon glyphicon-remove-sign"></i></a></span>
+                                <span ng-show="hasAuthorization(community)"><a class="btn btn-default" href="#update_community/{{community.com_id}}"><i class="glyphicon glyphicon-pencil"></i></a></span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <center><span id="spin"><img src="static/img/spin.gif"></span></center>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--<div ng-include src="'static/js/piwik.js'"></div>-->

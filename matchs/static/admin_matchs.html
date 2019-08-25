@@ -1,0 +1,187 @@
+<!-- Modal -->
+<div class="modal fade" id="pleaseWaitDialog" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1>Processing...</h1>
+            </div>
+            <div class="modal-body">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                        <span class="sr-only">100% Complete (success)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="jumbotron" xmlns="http://www.w3.org/1999/html">
+    <div class="container">
+
+        <div class="row-fluid" >
+            <h1>Administration des matchs ... et bien plus encore ! </h1>
+            <h2>(de grands pouvoirs impliquent de grandes responsabilités)</h2>
+            <br/>
+        </div>
+
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <h4>Enregistrement de l'historique des classements</h4>
+                        <div class="clearfix"></div>
+                    </h4>
+                </div>
+                <div class="panel-body">
+
+                    <div ng-show="!displaySaveButton">
+                        <h4 class="text-center">Vous devez être connectés pour enregistrer l'historique des classements (mais attention, t'as
+                            interêt à être habilité loulou !). Par
+                            <a href="/#!/signin?callback=admin_matchs">ici</a>.</h4>
+                    </div>
+                    <div ng-show="displaySaveButton">
+                        <button type="button" class="btn btn-success glyphicon glyphicon-save"
+                                ng-click="createHistoryRankings()"> Enregistrer l'historique des classements
+                        </button>
+                        <span style="visibility: hidden" id="spin_histo">   <img src="static/img/spin.gif"></span>
+                        <div class="alert alert-info" role="alert"><span class="glyphicon glyphicon-info-sign"></span> Rappel : enregistrement automatique par batch chaque nuit à 00:00.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <h4>Enregistrement des scores des matchs</h4>
+                        <div class="clearfix"></div>
+                    </h4>
+                </div>
+                <div class="panel-body">
+                    <form ng-submit="saveMatchs()">
+                        <div id="no-more-tables" class="table-responsive">
+
+                            <div ng-show="!displaySaveButton">
+                                <h4 class="text-center">Vous devez être connectés pour sauvegarder le résultat des matchs (mais attention, t'as
+                                    interêt à être habilité loulou !). Par
+                                    <a href="/#!/signin?callback=admin_matchs">ici</a>.</h4>
+                            </div>
+                            <input type="submit" ng-show="displaySaveButton" class="btn btn-success pull-right" value="Sauvegarder les Matchs"/>
+                            <label>
+                                <input type="checkbox" ng-show="displaySaveButton" ng-model="no_save"> Calcul des points sans sauvegarde (juste email)
+                            </label>
+                            <table class="table table-condensed table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="dateMatch">
+                                            <a ng-click="sortType='dateMatch';sortReverse=!sortReverse">Date
+                                                <span ng-show="sortType=='dateMatch'&&!sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                                                <span ng-show="sortType=='dateMatch' && sortReverse" class="glyphicon glyphicon-chevron-up"></span></a>
+                                        </th>
+                                        <th class="categoryName">
+                                            <a ng-click="sortType='categoryName';sortReverse=!sortReverse">Groupe
+                                                <span ng-show="sortType=='categoryName'&&!sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                                                <span ng-show="sortType=='categoryName' && sortReverse" class="glyphicon glyphicon-chevron-up"></span></a>
+                                        </th>
+                                        <th class="teamA">
+                                            <a ng-click="sortType='teamA';sortReverse=!sortReverse">Team A
+                                                <span ng-show="sortType=='teamA'&&!sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                                                <span ng-show="sortType=='teamA' && sortReverse" class="glyphicon glyphicon-chevron-up"></span></a>
+                                        </th>
+                                        <th>
+                                        </th>
+                                        <th>
+                                        </th>
+                                        <th class="teamB">
+                                            <a ng-click="sortType='teamB';sortReverse=!sortReverse">Team B
+                                                <span ng-show="sortType=='teamB'&&!sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                                                <span ng-show="sortType=='teamB' && sortReverse" class="glyphicon glyphicon-chevron-up"></span></a>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody ng-init="getMatchs();">
+                                    <tr ng-class="{ 'danger' : (match.resultA==null || match.resultB==null)}" ng-repeat="match in matchs | filter : match_filter | orderBy:sortType:sortReverse">
+                                        <td data-title="Date">{{match.dateMatch | date:'dd/MM/yy HH:mm'}}</td>
+                                        <td data-title="Groupe">{{match.categoryName}}</td>
+                                        <td data-title="TeamA"><span class="newflags {{match.teamA}}"></span> {{match.libteamA}}</td>
+                                        <td data-title="resultA">
+                                            <input class="form-control" ng-model="match.resultA"
+                                                   value="{{match.resultA}}" type="number" min="0" max="99">
+                                        </td>
+                                        <td data-title="resultB">
+                                            <input class="form-control" ng-model="match.resultB"
+                                                   value="{{match.resultB}}" type="number" min="0" max="99">
+                                        </td>
+                                        <td data-title="TeamB"><span class="newflags {{match.teamB}}"></span> {{match.libteamB}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <h4>Adresses mail des parieurs</h4>
+                        <div class="clearfix"></div>
+                    </h4>
+                </div>
+                <div class="panel-body">
+
+                    <div ng-show="!displaySaveButton">
+                        <h4 class="text-center">Vous devez être connectés pour consulter les @mails (mais attention, t'as
+                            interêt à être habilité loulou !). Par
+                            <a href="/#!/signin?callback=admin_matchs">ici</a>.</h4>
+                    </div>
+
+                    <div ng-show="displaySaveButton">
+
+                        <div class="jumbotron">
+                            <samp>{{ listEmails }}</samp>
+                        </div>
+
+                        <div id="no-more-tables" class="table-responsive">
+
+                            <table class="table table-condensed table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="avatar">Avatar</th>
+                                        <th class="nickName">
+                                            <a ng-click="sortType='nickName';sortReverse=!sortReverse">NickName
+                                                <span ng-show="sortType=='nickName'&&!sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                                                <span ng-show="sortType=='nickName' && sortReverse" class="glyphicon glyphicon-chevron-up"></span></a>
+                                        </th>
+                                        <th class="email">
+                                            <a ng-click="sortType='email';sortReverse=!sortReverse">e-Mail
+                                                <span ng-show="sortType=='email'&&!sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                                                <span ng-show="sortType=='email' && sortReverse" class="glyphicon glyphicon-chevron-up"></span></a>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody ng-init="getEmails();">
+                                    <tr ng-repeat="user in users | orderBy:sortType:sortReverse">
+                                        <td data-title="Avatar">
+                                            <img height="32px" width="32px" class="img-focus-avatar img-circle" ng-src ="users/apiv1.0/users/{{ user.user_id }}/avatar?{{ currentDateForAvoidTheCache }}">
+                                        </td>
+                                        <td data-title="NickName">{{user.nickName}}</td>
+                                        <td data-title="e-Mail">{{user.email}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<div ng-include src="'static/js/piwik.js'"></div>

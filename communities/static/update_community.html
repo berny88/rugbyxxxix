@@ -1,0 +1,166 @@
+﻿<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <div class="pull-left">
+                <h4><center>Update a community</center></h4>
+            </div>
+            <div class="pull-right"></div>
+            <div class="clearfix"></div>
+        </h4>
+    </div>
+    <div class="panel-body">
+        <form ng-init="getCommunityForUpdate()" ng-submit="updateCommunity()" class="form-horizontal">
+            <!--<div class="form-group">
+                <label class="control-label col-xs-3" for="id">Id:</label>
+                <div class="col-xs-9">
+                    <input ng-model="community.community.com_id" type="text" class="form-control" id="id" placeholder="Id" readonly="readonly">
+                </div>
+            </div>  -->
+    		<div class="form-group required">
+                <label class="control-label col-xs-3" for="title">Title:</label>
+                <div class="col-xs-9">
+                    <input ng-model="community.community.title" type="text" class="form-control" id="title" placeholder="Title" required="required">
+                </div>
+            </div>     
+            <div class="form-group">
+                <label class="control-label col-xs-3" for="description">Description:</label>
+                <div class="col-xs-9">
+                    <input ng-model="community.community.description" type="text" class="form-control" id="description" placeholder="Description">
+                </div>
+            </div>     
+            <br>
+            <div class="form-group">
+                <div class="col-xs-offset-3 col-xs-9">
+                    <input type="submit" class="btn btn-success" value="Modifier la communauté">
+                    <a href="javascript:history.back()">Back</a>
+                </div>
+            </div>
+        </form>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-12 col-md-12">
+                    <div class="topbar">
+                        <div class="container">
+                          <div class="row">
+                            <div class="col-s-4">
+                              <h1 ng-click="selectTab('CommunitiesCtrl')" class="push-left">{{title}}</h1>
+                            </div>
+                            <div class="offset-s-4 col-s-4">
+                              <nav role='navigation' class="push-right">
+                                <ul>
+                                  <li ng-click="selectTab('CommunitiesCtrl')">See all the posts</li>
+                                  <li ng-click="selectTab('new')" ng-show="hasAuthorization(community.community)">New post</li>
+                                </ul>
+                              </nav>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+
+                    <div class="container" style="width:100%">
+                        <div class="row">
+                            <ul class="post-grid" ng-show="isSelected('CommunitiesCtrl')">
+                              <li ng-repeat="post in posts" class="col-s-4"
+                                  ng-class="{ 'reset-s' : $index%3==0 }"
+                                  ng-click="selectTab($index)" >
+                                <h3>{{post.title}}</h3>
+                                <p>{{post.body[0] | limitTo:70}}...</p>
+                                <p class="fas fa-comment push-left"> {{post.comments.length}}
+                                </p>
+                              </li>
+                            </ul>
+                            <div class="post" ng-repeat="post in posts" ng-show="isSelected($index)">
+                                <div>
+                                    <h2>{{post.title}}</h2>
+                                    <cite>by {{post.author}} on {{post.createdOn | date}}</cite>
+                                    <div class="post-body">
+                                     <p ng-repeat="paragraph in post.body">
+                                       <span ng-bind-html="paragraph | linky:'_blank'"></span>
+                                     </p>
+                                    </div>
+                                    <p class="fas fa-comment push-left"> {{post.comments.length}}
+                                    </p>
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="btn-group" role="group" aria-label="...">
+                                                <button type="button" class="btn btn-info glyphicon glyphicon-resize-small"
+                                                        ng-click="selectTab('CommunitiesCtrl')">
+                                                    See all the posts again&nbsp;
+                                                </button>
+                                                <button type="button" class="btn btn-warning glyphicon glyphicon-envelope"
+                                                        ng-click="sendEmailToAll(post)">
+                                                    Re-send mail to all&nbsp;
+                                                </button>
+                                                <button type="button" class="btn btn-success glyphicon glyphicon-envelope"
+                                                        ng-click="sendEmailToMe(post)">
+                                                    Re-send mail to me only&nbsp;
+                                                </button>
+                                                <button type="button" class="btn btn-danger glyphicon glyphicon-remove-sign"
+                                                        ng-click="deletePost($index)">
+                                                    Delete&nbsp;
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="comments">
+                                        <h3>Comments</h3>
+                                        <ul>
+                                            <p ng-repeat="comment in post.comments">
+                                                "{{comment.body}}"
+                                                <cite>- <b>{{comment.author}}</b></cite>
+                                            </p>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="post" ng-show="isSelected('new')">
+                                <h2>New Post</h2>
+
+                                <form name="postForm" ng-submit="addPost()" class="form-horizontal">
+                                    <div class="form-group required">
+                                        <label for="post_title">Title</label>
+                                        <div class="col-xs-12">
+                                            <input type="text" id="post_title" ng-model="post.title" class="form-control" required="required"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group required">
+                                        <label for="post_body">Body</label>
+                                        <div class="col-xs-12">
+                                            <textarea ng-model="post.body" id="post_body"
+                                                      ng-list="&#10;"
+                                                      ng-trim="false"
+                                                      rows="10" class="form-control" required="required"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="emailOpt" id="emailOptNone" value="none" ng-model="post.emailOpt">
+                                            No mail
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="emailOpt" id="emailOptMe" value="me" ng-model="post.emailOpt">
+                                            Send email to me only
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="emailOpt" id="emailOptAll" value="all" ng-model="post.emailOpt">
+                                            Send email to all (me as well)
+                                        </label>
+                                    </div>
+                                    <input type="submit" ng-show="displayBlogPostSaveButton"
+                                           class="btn btn-success pull-right" value="Sauvegarder">
+
+                                </form>
+
+                            </div>
+
+                          </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>
+
+<!--<div ng-include src="'static/js/piwik.js'"></div>-->

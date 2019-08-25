@@ -1,0 +1,196 @@
+<!-- Image Background Page Header -->
+<header class="business-header">
+    <div class="container">
+        <div class="row">
+            <h1 class="tagline"></h1>
+        </div>
+    </div>
+</header>
+
+<br/>
+
+<div class=" jumbotron container-fluid" ng-controller="matchsCtrl">
+    <div class="row-fluid">
+        <div class="col-xs-12" ng-init="getMatchsOfTheDay();">
+
+            <fieldset>
+                <legend><marquee><h2><b>Breaking news : games of the day</b></h2></marquee></legend>
+
+                <div ng-show="displayMatchsOfTheDay == false">
+                    <center><h2>No game today !</h2></center>
+                </div>
+
+                <div ng-show="displayMatchsOfTheDay == true" id="no-more-tables" class="table-responsive">
+                    <div class="col-xs-12 col-">
+
+                        <table class="table table-condensed table-striped">
+                            <thead>
+                            <tr>
+                                <th class="dateMatch">
+                                    <a ng-click="sortType='dateMatch';sortReverse=!sortReverse">Date
+                                        <span ng-show="sortType=='dateMatch'&&!sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                                        <span ng-show="sortType=='dateMatch' && sortReverse" class="glyphicon glyphicon-chevron-up"></span></a>
+                                </th>
+                                <th class="categoryName">
+                                    <a ng-click="sortType='categoryName';sortReverse=!sortReverse">Group
+                                        <span ng-show="sortType=='categoryName'&&!sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                                        <span ng-show="sortType=='categoryName' && sortReverse" class="glyphicon glyphicon-chevron-up"></span></a>
+                                </th>
+                                <th class="teamA">
+                                    <a ng-click="sortType='teamA';sortReverse=!sortReverse">Team A
+                                        <span ng-show="sortType=='teamA'&&!sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                                        <span ng-show="sortType=='teamA' && sortReverse" class="glyphicon glyphicon-chevron-up"></span></a>
+                                </th>
+                                <th>
+                                </th>
+                                <th>
+                                </th>
+                                <th class="teamB">
+                                    <a ng-click="sortType='teamB';sortReverse=!sortReverse">Team B
+                                        <span ng-show="sortType=='teamB'&&!sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                                        <span ng-show="sortType=='teamB' && sortReverse" class="glyphicon glyphicon-chevron-up"></span></a>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="match in matchs | filter : match_filter | orderBy:sortType:sortReverse">
+                                <td data-title="Date">{{match.dateMatch | date:'dd/MM/yy HH:mm'}}</td>
+                                <td data-title="Groupe">{{match.categoryName}}</td>
+                                <td data-title="TeamA"><span class="newflags {{match.teamA}}"></span> {{match.libteamA}}</td>
+                                <td data-title="resultA"><input style="width:50px;text-align:center" value="{{match.resultA}}" disabled></td>
+                                <td data-title="resultB"><input style="width:50px;text-align:center" value="{{match.resultB}}" disabled></td>
+                                <td data-title="TeamB"><span class="newflags {{match.teamB}}"></span> {{match.libteamB}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+            </fieldset>
+
+        </div>
+    </div>
+</div>
+
+<div ng-show="isConnected()" class=" jumbotron container-fluid">
+    <div class="row-fluid">
+
+        <div class="row-fluid" >
+            <div class="col-xs-12">
+                <div id="no-more-tables" class="table-responsive">
+                    <table class="table table-condensed table-striped">
+                        <thead>
+                        <tr>
+                            <!--<th class="id">Id</th>-->
+                            <th class="title">
+                                <a ng-click="sortType='title';sortReverse=!sortReverse">Title<span ng-show="sortType=='title'&&!sortReverse" class="glyphicon glyphicon-chevron-down"></span><span ng-show="sortType=='title' && sortReverse" class="glyphicon glyphicon-chevron-up"></span></a>
+                            </th>
+                            <th class="description">Description</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody ng-init="getMyCommunities();">
+                        <tr ng-repeat="community in my_communities.communities | orderBy:sortType:sortReverse">
+                            <!--<td>{{community.com_id}}</td>-->
+                            <td data-title="Title">{{community.title}}</td>
+                            <td data-title="Desc.">{{community.description}}</td>
+                            <td>
+                                <span><a class="btn btn-warning" href="#bets_of_the_day_in_community/{{community.com_id}}"><i class="glyphicon glyphicon-fire" aria-hidden="true"></i> Hot !</a></span>
+                                <span><a class="btn btn-danger" href="#bet_in_community/{{community.com_id}}"><i class="fas fa-coins" aria-hidden="true"></i> Bet !</a></span>
+                                <span><a class="btn btn-success" href="#rank_in_community/{{community.com_id}}"><i class="fas fa-chart-line" aria-hidden="true"></i> Ranking</a></span>
+                                <span><a class="btn btn-primary" href="#bets_in_community/{{community.com_id}}"><i class="fas fa-dice" aria-hidden="true"></i> Our bets</a></span>
+                                <span><a class="btn btn-info" href="#blog_in_community/{{community.com_id}}"><i class="glyphicon glyphicon-bullhorn"></i> Blog</a></span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <center><span id="spin"><img src="static/img/spin.gif"></span></center>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div ng-show="!isConnected()" class="container-fluid">
+    <!--div class=" jumbotron container-fluid">
+        <div class="row-fluid">
+
+                <center>
+                    <span ng-init="injectCounter()" id="counter"></span>
+                </center>
+
+        </div>
+    </div>
+
+    <br/>-->
+
+    <div class="row">
+        <div class="col-sm-6">
+            <center>
+                <a href="#signin">
+                    <img class="img-focus img-circle img-responsive img-center" src="/static/img/france-champion-europe-1984.jpg" alt="">
+                    <h2>Log in !</h2>
+                </a>
+            </center>
+        </div>
+        <div class="col-sm-6">
+            <center>
+                 <a href="#signon">
+                    <img class="img-focus img-circle img-responsive img-center" src="/static/img/mondial98.jpg" alt="">
+                    <h2>Sign up !</h2>
+                </a>
+                <!--<img class="img-focus img-circle img-responsive img-center" style ="" src="/static/img/mondial98.jpg" alt="Inscriptions closed">
+                <h2>Inscriptions closed <br/> for this event !</h2>-->
+            </center>
+        </div>
+    </div>
+</div>
+
+<br/>
+
+<div class=" jumbotron container-fluid">
+    <div class="row-fluid">
+        <center><h1>TOP 5</h1></center>
+        <div class="col-sm-6 col-sm-offset-3">
+
+            <div id="divRanking" class="contentContainer" style="display:none" ng-controller="statsRankingCtrl" ng-init="getRanking('FINAL')">
+
+                <div class="skillBar" ng-repeat="ranking in rankings.data.rankings | limitTo:5">
+
+                    <div class="row-fluid">
+                        <div class="col-sm-1"><h4><span class="label label-info">{{$index + 1}}</span></h4></div>
+                        <div class="col-sm-8">
+                            <img height="32px" width="32px" class="img-circle" ng-src ="users/apiv1.0/users/{{ ranking.user.user_id }}/avatar?{{ currentDateForAvoidTheCache }}" >
+                            {{ranking.user.nickName}}
+                        </div>
+                        <div class="col-sm-3">
+                            {{ranking.nbPoints}} pts
+                        </div>
+                    </div>
+
+                    <div class="skillBarContainer">
+                        <div style="width:{{ ranking.nbPointsPercent }}%" class="skillBarValue"></div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <center><span id="spinRanking"><img src="static/img/spin.gif"></span></center>
+
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-4 col-sm-offset-4">
+            <img class="img-responsive img-center" src="/static/img/devices.png" alt="Bet on all of your devices !">
+            <center><h4>Bet on all of your devices !</h4></center>
+        </div>
+    </div>
+</div>
+
+<!--<div ng-include src="'static/js/piwik.js'"></div>-->

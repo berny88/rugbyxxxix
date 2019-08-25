@@ -1,0 +1,28 @@
+<div class="jumbotron">
+  <div class="container">
+    <h1><center>Connection</center></h1>
+    <div class="row">
+        <form name="thelogin" ng-submit="login()" required>
+          <div class="form-group">
+            <label for="email" class="control-label">Email</label>
+            <input type="email" class="form-control" id="email" name="nom" ng-model="email"
+              placeholder="Your email" value="" required="required">
+          </div>
+          <div class="form-group">
+            <label for="thepwd" class="control-label">Password</label>
+            <input type="password" class="form-control" id="thepwd" name="thepwd" ng-model="thepwd"
+                  placeholder="Your password" value="" required="required">
+          </div>
+          <button type="submit" id="submit" name="submit" value="Sign in"
+            class="btn btn-primary btn-lg">Login to your account !</button>
+          <a class="btn" href="#accueil">Back</a>
+        </form>
+        <br/>
+        <br/>
+        <!--<a class="btn btn-default disabled" href="#signon">No account yet ?</a> Inscriptions closed for this event !-->
+        <a class="btn btn-default" href="#signon">No account yet ?</a>
+    </div>
+  </div>
+ </div>
+
+<!--<div ng-include src="'static/js/piwik.js'"></div>-->

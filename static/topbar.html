@@ -1,0 +1,51 @@
+<div ng-controller="topbarCtrl">
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container" id="navfluid">
+          <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigationbar">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+               </button>
+               <a class="navbar-brand" href="#accueil">
+                 <span class="glyphicon glyphicon-home" aria-hidden="true"></span></a>
+          </div>
+          <div class="collapse navbar-collapse" id="navigationbar">
+              <ul class="nav navbar-nav">
+                  <li><a style="color:red" data-toggle="collapse" data-target=".navbar-collapse.in" href="#!/communities">
+                      <i class="fas fa-coins" aria-hidden="true"></i>&nbsp;Bet here !</a></li>
+                  <li><a data-toggle="collapse" data-target=".navbar-collapse.in" href="#!/rules">
+                    <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>&nbsp;Rules</a></li>
+                  <li><a data-toggle="collapse" data-target=".navbar-collapse.in" href="#!/users">
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;Bettors</a></li>
+
+                  <li class="dropdown">
+                      <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;Infos <span class="caret"></span></a>
+                      <ul class="dropdown-menu">
+                          <li><a data-toggle="collapse" data-target=".navbar-collapse.in" href="#!/matchs"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>&nbsp;Matchs</a></li>
+                          <li><a data-toggle="collapse" data-target=".navbar-collapse.in" href="#!/tirage"><i class="fas fa-clone" aria-hidden="true"></i>&nbsp;Groups</a></li>
+                          <li><a data-toggle="collapse" data-target=".navbar-collapse.in" href="#!/calendrier"><i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;Schedules map</a></li>
+                          <li role="separator" class="divider"></li>
+                          <!--<li><a data-toggle="collapse" data-target=".navbar-collapse.in" href="#stats_1"><i class="fa fa-futbol-o" aria-hidden="true"></i>&nbsp;Goals by team</a></li>
+                          <li><a data-toggle="collapse" data-target=".navbar-collapse.in" href="#stats_2"><i class="fa fa-futbol-o" aria-hidden="true"></i>&nbsp;Goals by team (8')</a></li>-->
+                          <li><a data-toggle="collapse" data-target=".navbar-collapse.in" href="#!/stats_ranking"><i class="fas fa-align-left"></i>&nbsp;Bettors ranking</a></li>
+                          <li><a data-toggle="collapse" data-target=".navbar-collapse.in" href="#!/stats_communities_ranking"><i class="fas fa-chart-pie" aria-hidden="true"></i>&nbsp;Communities ranking</a></li>
+                          <li><a data-toggle="collapse" data-target=".navbar-collapse.in" href="#!/stats_historyranking"><i class="fas fa-chart-line" aria-hidden="true"></i>&nbsp;History</a></li>
+                      </ul>
+                  </li>
+
+                  <li><a data-toggle="collapse" data-target=".navbar-collapse.in" href="#!/entertainment"><span class="glyphicon glyphicon-hd-video" aria-hidden="true"></span>&nbsp;Photos & Videos</a></li>
+                  <li><a data-toggle="collapse" data-target=".navbar-collapse.in" href="#!/about">About</a></li>
+                  <!--<li><a data-toggle="collapse" data-target=".navbar-collapse.in" href="#contact">Contact</a></li>-->
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
+                  <!--<li ng-show="!isConnected()"><a href="#!/signin"  ><span class="label label-success">Pour se connecter ...</span></a></li>-->
+                  <li ng-show="isConnected()"><a href="#!/user_detail/{{user_id}}" ><span id="connectedUserInTopbar" class="label label-success"></span></a></li>
+                  <li ng-show="!isConnected()"><a data-toggle="collapse" data-target=".navbar-collapse.in" href="#!/signin"><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;Log in</a></li>
+                  <li ng-show="isConnected()"><a data-toggle="collapse" data-target=".navbar-collapse.in" href="#!/logout"><span class="glyphicon glyphicon-off" aria-hidden="true"></span>&nbsp;Log out</a></li>
+              </ul>
+          </div>
+        </div>
+    </nav>
+</div>

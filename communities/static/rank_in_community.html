@@ -1,0 +1,91 @@
+﻿<div class="jumbotron container-fluid">
+    <div class="panel-body">
+        <form ng-init="getCommunity()" class="form-horizontal">
+            <!--<div class="form-group">
+                <label class="control-label col-xs-3" for="id">Id:</label>
+                <div class="col-xs-9">
+                    <input ng-model="community.community.com_id" type="text" class="form-control" id="id" placeholder="Id" readonly="readonly">
+                </div>
+            </div>  -->
+    		<div class="form-group">
+                <label class="control-label col-xs-3" for="title">Title:</label>
+                <div class="col-xs-9">
+                    <input ng-model="community.community.title" type="text" class="form-control" id="title" placeholder="Title" readonly="readonly">
+                </div>
+            </div>     
+            <div class="form-group">
+                <label class="control-label col-xs-3" for="description">Description:</label>
+                <div class="col-xs-9">
+                    <input ng-model="community.community.description" type="text" class="form-control" id="description" placeholder="Description" readonly="readonly">
+                </div>
+            </div>     
+        <br>
+
+        <a href="javascript:history.back()">Back</a><br/><br/>
+        <span><a class="btn btn-warning" href="#bets_of_the_day_in_community/{{community.community.com_id}}"><i class="glyphicon glyphicon-fire" aria-hidden="true"></i> Hot !</a></span>
+        <span><a class="btn btn-danger" ng-href="#bet_in_community/{{community.community.com_id}}"><i class="fas fa-coins" aria-hidden="true"></i> Bet !</a></span>
+        <span><a class="btn btn-success" ng-href="#bets_in_community/{{community.community.com_id}}"><i class="fas fa-chart-line" aria-hidden="true"></i> All the bets !</a></span>
+        </form>
+
+
+        <br/>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="row">
+                        <div class="col-md-offset-2 col-md-8">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <div class="pull-left">
+                                            <h4>Ranking of the community</h4>
+                                        </div>
+                                        <div class="pull-right"></div>
+                                        <div class="clearfix"></div>
+                                    </h4>
+                                </div>
+                                <div class="panel-body" ng-init="getRankingInCommunity('FINAL')">
+                                    <div class="alert alert-success" role="alert">
+                                        Your choice :
+                                        <div class="btn-group" role="group" aria-label="...">
+                                            <button id="btn-groupe" type="button" class="btn btn-success" ng-click="getRankingInCommunity('GROUPE')">Ranking of the group phase</button>
+                                            <button id="btn-final" type="button" class="btn btn-success active" ng-click="getRankingInCommunity('FINAL');">Ranking of the knockout phase</button>
+                                            <button id="btn-all" type="button" class="btn btn-success" ng-click="getRankingInCommunity('ALL');">Overall ranking</button>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div id="divRanking" style="display:none">
+                                        <div id="no-more-tables" class="table-responsive">
+                                            <table class="table table-condensed table-striped">
+
+                                                <tbody>
+                                                <tr ng-repeat="ranking in rankings.data.rankings">
+                                                    <td data-title="Classement"><span class="badge">{{$index + 1}}</span></td>
+                                                    <td data-title="NickName"><img height="32px" width="32px" class="img-circle" ng-src ="users/apiv1.0/users/{{ ranking.user.user_id }}/avatar?{{ currentDateForAvoidTheCache }}" > {{ranking.user.nickName}}</td>
+                                                    <td data-title="Points">{{ranking.nbPoints}}</td>
+                                                </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <center><span id="spinRanking"><img src="static/img/spin.gif"></span></center>
+                                    <center><a href="#stats_ranking"><i class="fas fa-chart-bar" aria-hidden="true"></i>&nbsp;Global ranking</a></center>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br/>
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<!--<div ng-include src="'static/js/piwik.js'"></div>-->

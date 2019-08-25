@@ -1,0 +1,45 @@
+<div class="container">
+
+    <h1><center>Bettors Ranking</center></h1>
+    <br/>
+    <div class="alert alert-info" role="alert"><span class="glyphicon glyphicon-info-sign"></span> When a bettor has bet in several communities, the average of his points is taken into account.</div>
+
+    <div class="alert alert-success" role="alert">
+        Your choice :
+        <div class="btn-group" role="group" aria-label="...">
+            <button id="btn-groupe" type="button" class="btn btn-success" ng-click="getRanking('GROUPE');">Ranking of the group phase</button>
+            <button id="btn-final" type="button" class="btn btn-success active" ng-click="getRanking('FINAL');">Ranking of the knockout phase</button>
+            <button id="btn-all" type="button" class="btn btn-success" ng-click="getRanking('ALL');">Overall ranking</button>
+        </div>
+    </div>
+
+    <div id="divRanking" class="contentContainer" style="display:none" ng-init="getRanking('FINAL')">
+
+        <div class="skillBar" ng-repeat="ranking in rankings.data.rankings">
+
+            <div class="row-fluid">
+                <div class="col-sm-1"><h4><span class="label label-info">{{$index + 1}}</span></h4></div>
+                <div class="col-sm-8">
+                    <img height="32px" width="32px" class="img-circle" ng-src ="users/apiv1.0/users/{{ ranking.user.user_id }}/avatar?{{ currentDateForAvoidTheCache }}" >
+                     {{ranking.user.nickName}}
+                </div>
+                <div class="col-sm-3">
+                    {{ranking.nbPoints}} pts
+                </div>
+            </div>
+
+            <div class="skillBarContainer">
+                <div style="width:{{ ranking.nbPointsPercent }}%" class="skillBarValue"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <br/>
+
+    <center><span id="spin"><img src="static/img/spin.gif"></span></center>
+
+</div>
+
+<!--<div ng-include src="'static/js/piwik.js'"></div>-->

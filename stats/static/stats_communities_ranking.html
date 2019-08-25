@@ -1,0 +1,28 @@
+<div class="container">
+    <h1><center>Ranking of the communities</center></h1>
+    <br/>
+    <div class="alert alert-info" role="alert"><span class="glyphicon glyphicon-info-sign"></span> The score achieved by a community is the average of its members' points.</div>
+
+    <div class="alert alert-info" role="alert"><span class="glyphicon glyphicon-info-sign"></span> NEW: for <b>the overall ranking</b>, players who have joined a community in the final phase, or who have dropped out at the end of the group stage are not counted in the calculation of the points of the said community.</div>
+
+
+    <div class="alert alert-success" role="alert">
+            Your choice :
+            <div class="btn-group" role="group" aria-label="...">
+                <button id="btn-groupe" type="button" class="btn btn-success" ng-click="getCommunitiesRanking('GROUPE');">Ranking of the group phase</button>
+                <button id="btn-final" type="button" class="btn btn-success active" ng-click="getCommunitiesRanking('FINAL');">Ranking of the knockout phase</button>
+                <button id="btn-all" type="button" class="btn btn-success" ng-click="getCommunitiesRanking('ALL');">Global ranking</button>
+            </div>
+        </div>
+
+        <div ng-init="getCommunitiesRanking('FINAL')">
+
+            <center><span id="spin_communities_ranking"><img src="static/img/spin.gif"></span></center>
+
+            <center><div id="plotly_pie" style="display:none"></div></center>
+
+        </div>
+
+</div>
+
+<!--<div ng-include src="'static/js/piwik.js'"></div>-->

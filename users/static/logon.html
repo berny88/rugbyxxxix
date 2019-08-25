@@ -1,0 +1,25 @@
+  <div class="container-fluid"  >
+    <h1></h1>
+    <div class="jumbotron" >
+      <form action="/users/subscription" method="POST">
+        <div class="form-group required">
+            <h1><span class=" glyphicon glyphicon-thumbs-up"></span> You made the right choice !</h1>
+
+            <label for="email" class="control-label">Enter your email address to register</label>
+          <input type="email" class="form-control" id="email" name="email"
+              placeholder="Votre email" value="" required="required">
+          <script>
+            $(function () {
+              $('#email').focus();
+            });
+          </script>
+        </div>
+        <button type="submit" id="submit" name="submit" value="Sign in"
+          class="btn btn-primary btn-lg">Sign up now !</button>
+          <a class="btn" href="#accueil">Back</a>
+      </form>
+    </div>
+  </div>
+
+  <!--<div ng-include src="'static/js/piwik.js'"></div>-->
+

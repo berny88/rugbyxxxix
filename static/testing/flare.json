@@ -1,0 +1,50 @@
+{
+  "name": "teams",
+  "children": [
+    {
+      "name": "groupea",
+      "color":"blue",
+      "children": [
+        {
+          "name": "FRANCE",
+          "size": 12
+        },
+        {
+          "name": "ROUMANIE",
+          "size": 5
+        },
+        {
+          "name": "ALBANIE",
+          "size": 1
+        },
+        {
+          "name": "SUISSE",
+          "size": 8
+        }
+      ]
+    },
+    {
+      "name": "data",
+      "color":"red",
+      "children": [
+        {
+          "name": "PAYS DE GALLES",
+          "size": 12
+        },
+        {
+          "name": "ANGLETERRE",
+          "size": 5
+        },
+        {
+          "name": "RUSSIE",
+          "size": 1
+        },
+        {
+          "name": "SLOVAQUIE",
+          "size": 8
+        }
+      ]
+    }
+  ]
+}
+

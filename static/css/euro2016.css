@@ -1,0 +1,303 @@
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  padding: 6px 0;
+  font-size: 12px;
+  line-height: 1.428571429;
+  border-radius: 15px;
+}
+.btn-circle.btn-lg {
+  width: 50px;
+  height: 50px;
+  padding: 10px 16px;
+  font-size: 18px;
+  line-height: 1.33;
+  border-radius: 25px;
+}
+.btn-circle.btn-xl {
+  width: 70px;
+  height: 70px;
+  padding: 10px 16px;
+  font-size: 24px;
+  line-height: 1.33;
+  border-radius: 35px;
+}
+
+.form-group.required .control-label:after {
+  content:" * ";
+  color:red;
+}
+
+/* Effets sur l'image d'inscription */
+.img-focus {
+    width: 200px;
+    position: relative;
+    opacity: 0.8;
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+
+.img-focus:hover {
+    transform: scale(1.5, 1.5);
+    opacity: 1;
+}
+
+/* Effets sur les avatars */
+.img-focus-avatar {
+    width: 32px;
+    position: relative;
+    opacity: 1;
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+
+.img-focus-avatar:hover {
+    z-index: 1000;
+    transform: scale(5, 5);
+    opacity: 1;
+}
+
+/* Effets sur les photos */
+.img-focus-picture {
+    width: 100%;
+    position: relative;
+    opacity: 0.8;
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+
+.img-focus-picture:hover {
+    transform: scale(1.5, 1.5);
+    opacity: 1;
+}
+
+/* Pour le chat : */
+.fa {
+  color:#0000;
+}
+
+#userList {
+  display:none;
+}
+
+#loader {
+  position:absolute;
+  z-index:2;
+  width:100%;
+  text-align:center;
+  top:40%;
+}
+
+/* Pour les tableaux (responsivness) */
+@media only screen and (max-width: 900px) {
+
+    /* Force table to not be like tables anymore */
+	#no-more-tables table,
+	#no-more-tables thead,
+	#no-more-tables tbody,
+	#no-more-tables th,
+	#no-more-tables td,
+	#no-more-tables tr {
+		display: block;
+	}
+
+	/* Hide table headers (but not display: none;, for accessibility) */
+	#no-more-tables thead tr {
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+
+	#no-more-tables tr { border: 1px solid #ccc; }
+
+	#no-more-tables td {
+		/* Behave  like a "row" */
+		border: none;
+		border-bottom: 1px solid #eee;
+		position: relative;
+		padding-left: 50%;
+		white-space: normal;
+		text-align:left;
+	}
+
+	#no-more-tables td:before {
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 45%;
+		padding-right: 10px;
+		white-space: nowrap;
+		text-align:left;
+		font-weight: bold;
+	}
+
+	/*
+	Label the data
+	*/
+	#no-more-tables td:before { content: attr(data-title); }
+}
+
+/* the resize the input of type = number */
+input[type="number"] {
+   width:60px;
+   font-size: 16px;
+}
+
+/* avoid a zoom with safari when focus in the field */
+input {
+   font-size: 16px;
+}
+.form-control {
+    font-size: 16px;
+}
+
+/* blog post*/
+* {
+  box-sizing: border-box;
+}
+html {
+  font-size: 18px;
+}
+.topbar {
+  background: #79B9D2;
+  color: white;
+  width: 100%;
+  z-index: 9999;
+  padding: 5px 20px;
+}
+.topbar h1 {
+  cursor: pointer;
+}
+.topbar nav {
+  margin-top: 25px;
+}
+.topbar nav ul {
+  padding: 0;
+  margin: 0;
+}
+.topbar li {
+  cursor: pointer;
+}
+
+.topbar nav ul li {
+  display: inline-block;
+  padding: 10px;
+}
+.topbar nav ul li a {
+  color: white;
+  text-decoration: none;
+}
+ul.post-grid {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+ul.post-grid li {
+  padding: 20px;
+  cursor: pointer;
+  -webkit-transition: background linear 0.5s;
+  transition: background linear 0.5s;
+  border-bottom: 1px solid #3a8bab;
+}
+ul.post-grid li:hover {
+  background: #3a8bab;
+  color: white;
+}
+ul.post-grid li:hover h3 {
+  color: white;
+}
+.content {
+  width: 100%;
+  position: relative;
+  padding: 20px 40px 20px;
+}
+.post h2,
+.post h3 {
+  color: #3a8bab;
+}
+.post {
+  -webkit-transition: 0.5s linear all;
+  transition: 0.5s linear all;
+  opacity: 1;
+  padding-bottom: 30px;
+  width: 100%;
+}
+.post cite {
+  display: inline-block;
+  padding: 10px 0;
+}
+.comments ul {
+  margin: 0;
+  padding: 0;
+}
+.comments ul li {
+  list-style-type: none;
+  padding: 20px 5px;
+  border-bottom: 1px #79B9D2 solid;
+}
+.post.ng-hide {
+  opacity: 0;
+}
+.post.ng-hide-add,
+.post.ng-hide-remove {
+  display: block!important;
+}
+.post.form {
+  width: 100%;
+}
+.post.input,
+.post.textarea {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  font-size: 1.1em;
+}
+.ng-invalid.ng-dirty {
+  border-color: red;
+}
+.ng-valid.ng-dirty {
+  border-color: green;
+}
+.post.img {
+  max-width: 100%;
+}
+
+
+/* test Berny */
+.rule_jumbo_1{
+    color: white;
+    background-color: #3a8bab;
+}
+
+.rule_jumbo_2{
+    color: white;
+    background-color: #8EA3D2;
+}
+
+/* Go to top */
+.scroll-to-top {
+    position: fixed;
+    background:url('/static/img/scroll-to-top.png') no-repeat;
+    cursor: pointer;
+    width:55px;
+    height: 55px;
+    bottom: 1em;
+    padding-right: 1em;
+    display: none;
+    z-index: 999;
+}
+
+/* Jauge */
+.liquidFillGaugeText { font-family: Helvetica; font-weight: bold; }
+
+.fillgauge-fixed {
+    position: fixed;
+    width:100px;
+    height: 100px;
+    bottom: 1em;
+    padding-right: 1em;
+    z-index: 999;
+}

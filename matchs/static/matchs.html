@@ -1,0 +1,67 @@
+<!-- include the modals -->
+<div class="jumbotron">
+    <div class="container">
+
+        <div class="row-fluid" >
+            <h1><center>The games</center></h1>
+        </div>
+
+        <div class="row-fluid" >
+            <div class="input-group input-group-md col-md-6 col-md-offset-3 padding">
+                <span class="input-group-addon">
+                    <i class="glyphicon glyphicon-filter"></i>
+                </span>
+                <input class="form-control" type="search" ng-model="match_filter">
+            </div>
+        </div>
+
+        <div id="no-more-tables" class="table-responsive">
+            <div class="col-xs-12">
+
+                <table class="table table-condensed table-striped">
+                    <thead>
+                        <tr>
+                            <th class="dateMatch">
+                                <a ng-click="sortType='dateMatch';sortReverse=!sortReverse">Date
+                                    <span ng-show="sortType=='dateMatch'&&!sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                                    <span ng-show="sortType=='dateMatch' && sortReverse" class="glyphicon glyphicon-chevron-up"></span></a>
+                            </th>
+                            <th class="categoryName">
+                                <a ng-click="sortType='categoryName';sortReverse=!sortReverse">Group
+                                    <span ng-show="sortType=='categoryName'&&!sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                                    <span ng-show="sortType=='categoryName' && sortReverse" class="glyphicon glyphicon-chevron-up"></span></a>
+                            </th>
+                            <th class="teamA">
+                                <a ng-click="sortType='teamA';sortReverse=!sortReverse">Team A
+                                    <span ng-show="sortType=='teamA'&&!sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                                    <span ng-show="sortType=='teamA' && sortReverse" class="glyphicon glyphicon-chevron-up"></span></a>
+                            </th>
+                            <th>
+                            </th>
+                            <th>
+                            </th>
+                            <th class="teamB">
+                                <a ng-click="sortType='teamB';sortReverse=!sortReverse">Team B
+                                    <span ng-show="sortType=='teamB'&&!sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                                    <span ng-show="sortType=='teamB' && sortReverse" class="glyphicon glyphicon-chevron-up"></span></a>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody ng-init="getMatchs();">
+                        <tr ng-class="{ 'danger' : (match.resultA==null || match.resultB==null)}" ng-repeat="match in matchs | filter : match_filter | orderBy:sortType:sortReverse">
+                            <td data-title="Date">{{match.dateMatch | date:'dd/MM/yy HH:mm'}}</td>
+                            <td data-title="Group">{{match.categoryName}}</td>
+                            <td data-title="TeamA"><span class="newflags {{match.teamA}}"></span> {{match.libteamA}}</td>
+                            <td data-title="resultA"><input style="width:50px;text-align:center;" value="{{match.resultA}}" disabled></td>
+                            <td data-title="resultB"><input style="width:50px;text-align:center;" value="{{match.resultB}}" disabled></td>
+                            <td data-title="TeamB"><span class="newflags {{match.teamB}}"></span> {{match.libteamB}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--<div ng-include src="'static/js/piwik.js'"></div>-->

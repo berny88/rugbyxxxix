@@ -1,0 +1,42 @@
+﻿<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <div class="pull-left">
+                <h4><center>Community creation</center></h4>
+            </div>
+            <div class="pull-right"></div>
+            <div class="clearfix"></div>
+        </h4>
+    </div>
+    <div class="panel-body">
+        <form ng-init="setFocusWhenCreatingCommunity()" ng-submit="createCommunity()" class="form-horizontal">
+            <!--<div class="form-group">
+                <label class="control-label col-xs-3" for="id">Id:</label>
+                <div class="col-xs-9">
+                    <input type="text" class="form-control" id="id" placeholder="Sera retourné par le serveur" readonly="readonly">
+                </div>
+            </div>  -->
+    		<div class="form-group required">
+                <label class="control-label col-xs-3" for="title">Title:</label>
+                <div class="col-xs-9">
+                    <input ng-model="communityToCreate.title" type="text" class="form-control" id="title" placeholder="Title" required="required">
+                </div>
+            </div>     
+            <div class="form-group">
+                <label class="control-label col-xs-3" for="description">Description:</label>
+                <div class="col-xs-9">
+                    <input ng-model="communityToCreate.description" type="text" class="form-control" id="description" placeholder="Description">
+                </div>
+            </div>     
+            <br>
+            <div class="form-group">
+                <div class="col-xs-offset-3 col-xs-9">
+                    <input type="submit" class="btn btn-success" value="Create the community">
+                    <a href="javascript:history.back()">Back</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!--<div ng-include src="'static/js/piwik.js'"></div>-->

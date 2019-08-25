@@ -1,0 +1,140 @@
+<div class="jumbotron">
+    <div class="container">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <div class="pull-left">
+                            <h4>Identity of the bettor</h4>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                    </h4>
+                </div>
+                <div class="panel-body">
+                    <form name="thelogin" ng-submit="saveUser()">
+                      <div class="form-group" required>
+                          <!--<label for="uuid" class="control-label">uuid</label>
+                          <input type="uuid" class="form-control" id="uuid" name="uuid" ng-model="user.user_id"
+                          placeholder="Id" value="{{user.user_id}}" readonly> -->
+
+                          <label for="email" class="control-label">Email</label>
+                          <input type="email" class="form-control" id="email" name="email" ng-model="user.email"
+                          placeholder="Your email" value="{{user.email}}" disabled>
+
+                          <label for="nickName" class="control-label">Nickname</label>
+                          <div ng-show="hasAuthorization()">
+                              <input type="nickName" class="form-control" id="nickName" name="nickName" ng-model="user.nickName" placeholder="Your nickname" value="{{user.nickName}}" required="required">
+                                <script>
+                                $(function () {
+                                    $('#nickName').focus();
+                                });
+                                </script>
+                          </div>
+                          <div ng-show="!hasAuthorization()">
+                              <input type="nickName" class="form-control" id="nickName" name="nickName" ng-model="user.nickName" placeholder="Your nickname" value="{{user.nickName}}" disabled>
+                          </div>
+
+                          <label for="description" class="control-label">Description</label>
+                          <div ng-show="hasAuthorization()">
+                              <input type="description" class="form-control" id="description" name="description" ng-model="user.description" placeholder="Something particular ?" value="{{user.description}}" >
+                          </div>
+                          <div ng-show="!hasAuthorization()">
+                              <input type="description" class="form-control" id="description" name="description" ng-model="user.description" placeholder="Something particular ?" value="{{user.description}}" disabled>
+                          </div>
+
+                          <div ng-show="hasAuthorization()">
+                            <label for="thepwd" class="control-label">Password</label>
+                            <input type="password" class="form-control" id="thepwd" name="thepwd" ng-model="user.pwd"
+                              placeholder="Password" value="" required="required">
+                              <br/>
+                              <div class="alert alert-info" role="alert"><span class="glyphicon glyphicon-info-sign"></span> For security reasons, your password is never displayed. He's only known by you. Administrators have the option to reset it if forgotten.</div>
+                          </div>
+
+                          <!--<label for="validated" class="control-label">Validated</label>
+                          <input type="validated" class="form-control" id="validated" name="validated" ng-model="user.validated"
+                          placeholder="Validated" value="{{user.validated}}" disabled>-->
+                      </div>
+                      <div class="form-group">
+                          <button ng-show="hasAuthorization()" type="submit" id="submit" name="submit" value="Sauvegarder"
+                            class="btn btn-primary btn-lg">Save</button>
+                          <a class="btn" href="#!/users">Back</a>
+                      </div>
+                    </form>
+                </div>
+            </div>
+
+            <div ng-show="hasAuthorization() && !firstConnection" class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <div class="pull-left">
+                            <h4>Avatar
+                            <img id="img_avatar" height="32px" width="32px" class="img-focus-avatar img-circle" ng-src ="users/apiv1.0/users/{{ user.user_id }}/avatar?{{ currentDateForAvoidTheCache }}" >
+                            </h4>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                    </h4>
+                </div>
+                <div class="panel-body">
+                    <form name="avatar" ng-submit="saveAvatar()" enctype="multipart/form-data">
+                        <div class="form-group" required>
+
+                            <label for="avatar" class="control-label">Change your avatar</label>
+                            <input type="file" id="avatar" file-model="myAvatar" accept="image/jpeg" required="required">
+                            <br/>
+                            <div class="alert alert-info" role="alert"><span class="glyphicon glyphicon-info-sign"></span> Achtung : square file in jpg format and size less than 500 Ko</div>
+
+                        </div>
+                        <div class="form-group">
+                            <button  type="submit" name="submit" value="Enregistrer"
+                                    class="btn btn-primary btn-lg">Save</button>
+                            <a class="btn" href="#!/users">Back</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <div class="pull-left">
+                            <h4>List of communities with bets</h4>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                    </h4>
+                </div>
+                <div class="panel-body">
+                    <div id="no-more-tables" class="table-responsive">
+                        <table class="table table-condensed table-striped">
+                            <thead>
+                            <tr>
+                                <th class="title">
+                                    <a ng-click="sortType='title';sortReverse=!sortReverse">Title<span ng-show="sortType=='title'&&!sortReverse" class="glyphicon glyphicon-chevron-down"></span><span ng-show="sortType=='title' && sortReverse" class="glyphicon glyphicon-chevron-up"></span></a>
+                                </th>
+                                <th class="description">Description</th>
+                            </tr>
+                            </thead>
+
+                            <tbody ng-init="getCommunitiesByPlayer();">
+                            <tr ng-repeat="community in communities | orderBy:sortType:sortReverse">
+                                <td data-title="Communauté">{{community.title}}</td>
+                                <td data-title="Description">{{community.description}}</td>
+                                <td><span><a class="btn btn-default" href="#!/bet_in_community/{{community.com_id}}"><i class="glyphicon glyphicon-log-in"></i> Go !</a></span></td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <center><span id="spin"><img src="static/img/spin.gif"></span></center>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--<div ng-include src="'static/js/piwik.js'"></div>-->

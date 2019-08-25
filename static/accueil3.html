@@ -1,0 +1,185 @@
+<!-- Image Background Page Header -->
+<header class="business-header" >
+    <div class="container">
+        <div class="row">
+            <h1 class="tagline"></h1>
+        </div>
+    </div>
+</header>
+
+<div class="container-fluid" ng-controller="matchsCtrl" ng-init="getMatchsOfTheDay();" style="padding-left : 0px;">
+    <div class="row-fluid" >
+        <div class="col-xs-12" style="padding-left : 0px;">
+            <br/>
+            <span><marquee><h2><b>World cup finished !</b></h2></marquee></span>
+
+            <div ng-show="displayMatchsOfTheDay == false">
+                <div style="padding-left : 0px; font-size : 12px" class="col-md-offset-3 col-md-6">
+
+                    <table class="table table-condensed table-striped">
+                        <tbody>
+                        <tr>
+                            <td style="vertical-align:middle;text-align: center;">FRANCE</td>
+                            <td style="vertical-align:middle;text-align: right;"><span class="newflags FRA"></span></td>
+                            <td style="vertical-align:middle;">
+                                <center>
+                                    <table>
+                                        <tr><td><input style="width:35px;text-align:center;" value="4" disabled></td>
+                                            <td><input style="width:35px;text-align:center;" value="2" disabled></td>
+                                        </tr>
+                                    </table>
+                                </center>
+                            <td style="vertical-align:middle;text-align: left;"><span class="newflags CRO"></span></td>
+                            <td style="vertical-align:middle;text-align: center;">CROATIA</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+            <div ng-show="displayMatchsOfTheDay == true" id="no-more-tables_a">
+                <div style="padding-left : 0px; font-size : 12px" class="col-md-offset-3 col-md-6">
+
+                    <table class="table table-condensed table-striped">
+                        <tbody>
+                        <tr ng-repeat="match in matchs">
+                            <td style="vertical-align:middle;text-align: center;">{{match.libteamA}}</td>
+                            <td style="vertical-align:middle;text-align: right;"><span class="newflags {{match.teamA}}"></span></td>
+                            <td style="vertical-align:middle;">
+                                <center>
+                                    <table>
+                                        <tr><td colspan="2"><center>{{match.dateMatch | date:'HH:mm'}}</center></td></tr>
+                                        <tr><td><input style="width:35px;text-align:center;" value="{{match.resultA}}" disabled></td>
+                                            <td><input style="width:35px;text-align:center;" value="{{match.resultB}}" disabled></td>
+                                        </tr>
+                                    </table>
+                                </center>
+                            <td style="vertical-align:middle;text-align: left;"><span class="newflags {{match.teamB}}"></span></td>
+                            <td style="vertical-align:middle;text-align: center;">{{match.libteamB}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <center>
+            <img class="img-focus img-circle img-responsive img-center" src="/static/img/mondial2018.jpg" alt="">
+        </center>
+    </div>
+</div>
+
+<div ng-show="isConnected()" class="container-fluid" style="padding-left : 3px;padding-right : 3px">
+    <div class="row-fluid">
+            <div class="col-xs-12">
+                <div id="no-more-tables" class="table-responsive">
+                    <table class="table table-condensed table-striped">
+                        <tbody ng-init="getMyCommunities();">
+                        <tr ng-repeat="community in my_communities.communities | orderBy:sortType:sortReverse">
+                            <td data-title="Title">{{community.title}}</td>
+                            <td data-title="Desc.">{{community.description}}</td>
+                            <td>
+                                <span><a class="btn btn-warning" href="#bets_of_the_day_in_community/{{community.com_id}}"><i class="glyphicon glyphicon-fire" aria-hidden="true"></i> Hot !</a></span>
+                                <span><a class="btn btn-danger" href="#bet_in_community/{{community.com_id}}"><i class="fas fa-coins" aria-hidden="true"></i> Bet !</a></span>
+                                <span><a class="btn btn-success" href="#rank_in_community/{{community.com_id}}"><i class="fas fa-chart-line" aria-hidden="true"></i> Ranking</a></span>
+                                <span><a class="btn btn-primary" href="#bets_in_community/{{community.com_id}}"><i class="fas fa-dice" aria-hidden="true"></i> <span>Our bets</span></a></span>
+                                <span><a class="btn btn-info" href="#blog_in_community/{{community.com_id}}"><i class="glyphicon glyphicon-bullhorn"></i> Blog</a></span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <center><span id="spin"><img src="static/img/spin.gif"></span></center>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div ng-show="!isConnected()" class="container-fluid">
+    <!--div class=" jumbotron container-fluid">
+        <div class="row-fluid">
+
+                <center>
+                    <span ng-init="injectCounter()" id="counter"></span>
+                </center>
+
+        </div>
+    </div>
+
+    <br/>-->
+
+    <div class="row">
+        <div class="col-sm-6">
+            <center>
+                <a href="#signin">
+                    <img class="img-focus img-circle img-responsive img-center" src="/static/img/france-champion-europe-1984.jpg" alt="">
+                    <h2>Log in !</h2>
+                </a>
+            </center>
+        </div>
+        <div class="col-sm-6">
+            <center>
+                <!--
+                <a href="#signon">
+                    <img class="img-focus img-circle img-responsive img-center" src="/static/img/mondial98.jpg" alt="">
+                    <h2>Sign up !</h2>
+                </a>-->
+                <img class="img-focus img-circle img-responsive img-center" style ="" src="/static/img/mondial98.jpg" alt="Inscriptions closed">
+                <h2>Inscriptions closed <br/> for this event !</h2>
+            </center>
+        </div>
+    </div>
+</div>
+
+<div class=" jumbotron container-fluid">
+    <div class="row-fluid">
+        <center><h1>TOP 5</h1></center>
+        <div class="col-sm-6 col-sm-offset-3">
+
+            <div id="divRanking" class="contentContainer" style="display:none" ng-controller="statsRankingCtrl" ng-init="getRanking('FINAL')">
+
+                <div class="skillBar" ng-repeat="ranking in rankings.data.rankings | limitTo:5">
+
+                    <div class="row-fluid">
+                        <div class="col-sm-1"><h4><span class="label label-info">{{$index + 1}}</span></h4></div>
+                        <div class="col-sm-8">
+                            <img height="32px" width="32px" class="img-circle" ng-src ="users/apiv1.0/users/{{ ranking.user.user_id }}/avatar?{{ currentDateForAvoidTheCache }}" >
+                            {{ranking.user.nickName}}
+                        </div>
+                        <div class="col-sm-3">
+                            {{ranking.nbPoints}} pts
+                        </div>
+                    </div>
+
+                    <div class="skillBarContainer">
+                        <div style="width:{{ ranking.nbPointsPercent }}%" class="skillBarValue"></div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <center><span id="spinRanking"><img src="static/img/spin.gif"></span></center>
+
+        </div>
+    </div>
+</div>
+
+<br/>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-4 col-sm-offset-4">
+            <img class="img-responsive img-center" src="/static/img/devices.png" alt="Bet on all of your devices !">
+            <center><h4>Bet on all of your devices !</h4></center>
+        </div>
+    </div>
+</div>
+
+<!--<div ng-include src="'static/js/piwik.js'"></div>-->

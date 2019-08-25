@@ -1,0 +1,176 @@
+<!-- Modal -->
+<div class="modal fade" id="pleaseWaitDialog" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1>Processing...</h1>
+            </div>
+            <div class="modal-body">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                        <span class="sr-only">100% Complete (success)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div ng-controller="BetsCtrl">
+    <form ng-submit="saveBets()" ng-init="getBetsByCommunityId()">
+
+        <div class="row">
+            <div class="col-xs-12">
+                <input type="submit" ng-show="displaySaveButton" class="btn btn-success pull-right" value="Save the bets">
+            </div>
+        </div>
+
+        <br/>
+
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingOne">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Group phase
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body">
+
+                        <div id="no-more-tables" class="table-responsive">
+                            <table class="table table-condensed table-striped">
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    <th class="dateMatch">
+                                        <a ng-click="sortType='dateMatch';sortReverse=!sortReverse">Date
+                                            <span ng-show="sortType=='dateMatch'&&!sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                                            <span ng-show="sortType=='dateMatch' && sortReverse" class="glyphicon glyphicon-chevron-up"></span></a>
+                                    </th>
+                                    <th class="categoryName">
+                                        <a ng-click="sortType='categoryName';sortReverse=!sortReverse">Group
+                                            <span ng-show="sortType=='categoryName'&&!sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                                            <span ng-show="sortType=='categoryName' && sortReverse" class="glyphicon glyphicon-chevron-up"></span></a>
+                                    </th>
+                                    <th class="teamA">
+                                        <a ng-click="sortType='teamA';sortReverse=!sortReverse">Team A
+                                            <span ng-show="sortType=='teamA'&&!sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                                            <span ng-show="sortType=='teamA' && sortReverse" class="glyphicon glyphicon-chevron-up"></span></a>
+                                    </th>
+                                    <th>
+                                    </th>
+                                    <th>
+                                    </th>
+                                    <th class="teamB">
+                                        <a ng-click="sortType='teamB';sortReverse=!sortReverse">Team B
+                                            <span ng-show="sortType=='teamB'&&!sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                                            <span ng-show="sortType=='teamB' && sortReverse" class="glyphicon glyphicon-chevron-up"></span></a>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-class="{ 'danger' : (bet.resultA==null || bet.resultB==null)}" ng-repeat="bet in bets.bets | filter: onlyGroupeFilter | orderBy:sortType:sortReverse">
+                                        <td data-title="Stats">
+                                            <div><span custom-popover popover-key="{{ bet.key }}" popover-placement="bottom"><a tabindex="0" role="button" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-question-sign"></span></a></span></div>
+                                        </td>
+                                        <td data-title="Date">{{bet.dateMatch | date:'dd/MM/yy HH:mm'}}</td>
+                                        <td data-title="Group">{{bet.categoryName}}</td>
+                                        <td data-title="TeamA"><span class="newflags {{bet.teamA}}"></span> {{bet.libteamA}}</td>
+                                        <td>
+                                            <input ng-blur="gaugeUpdate(bets.bets)" ng-show="bet.notClosed" class="form-control" ng-model="bet.resultA" value="{{bet.resultA}}" type="number" min="0" max="99">
+                                            <input ng-blur="gaugeUpdate(bets.bets)" ng-show="!bet.notClosed" class="form-control" ng-model="bet.resultA" value="{{bet.resultA}}" type="number" min="0" max="99" disabled>
+                                        </td>
+                                        <td>
+                                            <input ng-blur="gaugeUpdate(bets.bets)" ng-show="bet.notClosed" class="form-control" ng-model="bet.resultB" value="{{bet.resultB}}" type="number" min="0" max="99">
+                                            <input ng-blur="gaugeUpdate(bets.bets)" ng-show="!bet.notClosed" class="form-control" ng-model="bet.resultB" value="{{bet.resultB}}" type="number" min="0" max="99" disabled>
+                                        </td>
+                                        <td data-title="TeamB"><span class="newflags {{bet.teamB}}"></span> {{bet.libteamB}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <center><span id="spin_bets_groupe"><img src="static/img/spin.gif"></span></center>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingTwo">
+                    <h4 class="panel-title">
+                        <a role="button" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            Knockout phase
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+                    <div class="panel-body">
+
+                        <div id="no-more-tables" class="table-responsive">
+                            <table class="table table-condensed table-striped">
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    <th class="dateMatch">
+                                        <a ng-click="sortType='dateMatch';sortReverse=!sortReverse">Date
+                                            <span ng-show="sortType=='dateMatch'&&!sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                                            <span ng-show="sortType=='dateMatch' && sortReverse" class="glyphicon glyphicon-chevron-up"></span></a>
+                                    </th>
+                                    <th class="categoryName">
+                                        <a ng-click="sortType='categoryName';sortReverse=!sortReverse">Group
+                                            <span ng-show="sortType=='categoryName'&&!sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                                            <span ng-show="sortType=='categoryName' && sortReverse" class="glyphicon glyphicon-chevron-up"></span></a>
+                                    </th>
+                                    <th class="teamA">
+                                        <a ng-click="sortType='teamA';sortReverse=!sortReverse">Team A
+                                            <span ng-show="sortType=='teamA'&&!sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                                            <span ng-show="sortType=='teamA' && sortReverse" class="glyphicon glyphicon-chevron-up"></span></a>
+                                    </th>
+                                    <th>
+                                    </th>
+                                    <th>
+                                    </th>
+                                    <th class="teamB">
+                                        <a ng-click="sortType='teamB';sortReverse=!sortReverse">Team B
+                                            <span ng-show="sortType=='teamB'&&!sortReverse" class="glyphicon glyphicon-chevron-down"></span>
+                                            <span ng-show="sortType=='teamB' && sortReverse" class="glyphicon glyphicon-chevron-up"></span></a>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-class="{ 'danger' : (bet.resultA==null || bet.resultB==null)}" ng-repeat="bet in bets.bets | filter: onlyFinalFilter | orderBy:sortType:sortReverse">
+                                    <td data-title="Trends">
+                                        <div><span custom-popover popover-key="{{ bet.key }}" popover-placement="bottom"><a tabindex="0" role="button" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-question-sign"></span></a></span></div>
+                                    </td>
+                                    <td data-title="Date">{{bet.dateMatch | date:'dd/MM/yy HH:mm'}}</td>
+                                    <td data-title="Group">{{bet.categoryName}}</td>
+                                    <td data-title="TeamA"><span class="newflags {{bet.teamA}}"></span> {{bet.libteamA}}</td>
+                                    <td>
+                                        <input ng-blur="gaugeUpdate(bets.bets)" ng-show="bet.notClosed" class="form-control" ng-model="bet.resultA" value="{{bet.resultA}}" type="number" min="0" max="99">
+                                        <input ng-blur="gaugeUpdate(bets.bets)" ng-show="!bet.notClosed" class="form-control" ng-model="bet.resultA" value="{{bet.resultA}}" type="number" min="0" max="99" disabled>
+                                    </td>
+                                    <td>
+                                        <input ng-blur="gaugeUpdate(bets.bets)" ng-show="bet.notClosed" class="form-control" ng-model="bet.resultB" value="{{bet.resultB}}" type="number" min="0" max="99">
+                                        <input ng-blur="gaugeUpdate(bets.bets)" ng-show="!bet.notClosed" class="form-control" ng-model="bet.resultB" value="{{bet.resultB}}" type="number" min="0" max="99" disabled>
+                                    </td>
+                                    <td data-title="TeamB"><span class="newflags {{bet.teamB}}"></span> {{bet.libteamB}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <center><span id="spin_bets_final"><img src="static/img/spin.gif"></span></center>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <input type="submit" ng-show="displaySaveButton" class="btn btn-success pull-right" value="Save the bets">
+
+    </form>
+
+    <div class="col-xs-offset-10 col-md-offset-11"><div class="fillgauge-fixed"><svg id="fillgauge" width="97%" height="100"></svg></div></div>
+
+</div>

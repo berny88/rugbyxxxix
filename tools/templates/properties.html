@@ -1,0 +1,39 @@
+{% extends "squelette.html" %}
+
+{% block titre %}Page des Properties {{ name }}{% endblock %}
+
+{% block corps %}
+
+<div class="container">
+  <div class="row">Properties </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <form action="{{url_for('tools_page.saveproperties')}}" method="post" class="form-inline">
+        {% for prop in propertyList %}
+          <div class="panel panel-primary">
+            <div class="panel-body">
+              <div class="form-group">
+                <label for="{{prop.key}}">key</label>
+                <input type="text"  maxlength="50"
+                  class="form-control" id="{{prop.key}}_key" name="{{prop.key}}_key"
+                  value="{{prop.key}}" placeholder="new key" size="30"/>
+                <label for="{{prop.value}}">value</label>
+                <input type="text"  maxlength="300"
+                  class="form-control" id="{{prop.key}}_value" name="{{prop.key}}_value"
+                  value="{{prop.value}}" placeholder="new value" size="20"/>
+              </div>
+            </div>
+          </div><!-- end panel panel-primary -->
+        {% endfor %}
+        <button type="submit" id="submit" name="submit" value="save"
+          class="btn btn-primary btn-lg">Save</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+<footer>Copyright berny.fr 2015</footer>
+{% endblock %}
