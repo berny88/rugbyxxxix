@@ -183,8 +183,8 @@ betApp.controller('statsRankingCtrl', ['$scope', '$http', '$q', '$routeParams','
             community_id = 'all'
         }
         $http.get('/stats/apiv1.0/stats/historyrankings?com_id='+community_id, {timeout: canceler.promise})
-        .success(function(data) {
-            $scope.historyrankings = data.data.historyrankings;
+        .then(function(answer) {
+            $scope.historyrankings = answer.data.data.historyrankings;
             dates = [];
             users_id =[];
             users_nickname =[];
@@ -309,8 +309,8 @@ betApp.controller('statsRankingCtrl', ['$scope', '$http', '$q', '$routeParams','
             $('#spin').hide();
             $('#spin3').hide();
 
-        })
-        .error(function(data, status, headers, config) {
+        },
+        function(data, status, headers, config) {
             if (status==-1) {
                 //do nothing
             } else {
@@ -342,8 +342,8 @@ betApp.controller('statsRankingCtrl', ['$scope', '$http', '$q', '$routeParams','
         }
 
         $http.get('communities/apiv1.0/communities', {timeout: canceler.promise})
-        .success(function(data, status, headers, config) {
-            $scope.communities = data.communities;
+        .then(function(answer, status, headers, config) {
+            $scope.communities = answer.data.communities;
 
             var tasks = fillValuesAndLabels($scope.communities,category);
 
@@ -391,8 +391,8 @@ betApp.controller('statsRankingCtrl', ['$scope', '$http', '$q', '$routeParams','
                 $('#plotly_pie').show();
             });
 
-        })
-        .error(function(data, status, headers, config) {
+        },
+        function(data, status, headers, config) {
             if (status==-1) {
                 //do nothing
             } else {
@@ -415,8 +415,8 @@ betApp.controller('statsRankingCtrl', ['$scope', '$http', '$q', '$routeParams','
             tasks.push(
 
                 $.get('/communities/apiv1.0/communities/'+community.com_id+'/ranking?filter='+category+'&requester=COMMUNITIES_RANKING')
-                .success(function(data) {
-                    $scope.rankings = data.data.rankings;
+                .then(function(answer) {
+                    $scope.rankings = answer.data.rankings;
 
                     if ($scope.rankings.length != 0) {
                         nbPointsTot = 0;
@@ -433,8 +433,8 @@ betApp.controller('statsRankingCtrl', ['$scope', '$http', '$q', '$routeParams','
                         }
                         $scope.labels.push($scope.rankings[0].communities[0].title);
                     }
-                })
-                .error(function(data, status, headers, config) {
+                },
+                function(data, status, headers, config) {
                     if (status==-1) {
                         //do nothing
                     } else {

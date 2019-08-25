@@ -213,7 +213,7 @@ betApp.controller('CommunitiesCtrl', ['$scope', '$routeParams', '$http', '$q', '
             hideAlerts();
             $http.get('communities/apiv1.0/communities/' + $routeParams.com_id + '/players', {timeout: canceler.promise})
             .then(function(answer, status, headers, config) {
-                $scope.players = data;
+                $scope.players = answer.data;
             },
             function(data, status, headers, config) {
                 if (status==-1) {
@@ -256,7 +256,7 @@ betApp.controller('CommunitiesCtrl', ['$scope', '$routeParams', '$http', '$q', '
 
             $http.get('/communities/apiv1.0/communities/'+$routeParams.com_id+'/ranking?filter='+category, {timeout: canceler.promise})
             .then(function(answer) {
-                $scope.rankings = data;
+                $scope.rankings = answer.data;
                 $('#spinRanking').hide();
                 $('#divRanking').show();
                 $('#divBets').show();

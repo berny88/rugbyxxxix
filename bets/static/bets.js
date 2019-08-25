@@ -6,18 +6,18 @@ betApp.directive('customPopover', function ($http,$timeout) {
             el.bind('click', function(e) {
 
                     $http.get('bets/apiv1.0/bets/'+attrs.popoverKey+'/rates')
-                    .success(function(data, status, headers, config) {
+                    .then(function(answer, status, headers, config) {
 
                         $(el).popover({
                             trigger: 'focus',
                             html:true,
                             title: 'Trends',
-                            content: '<table><tr><td>Number of players</td><td>: '+data.rates.nbBets +'</td></tr><tr><td>TeamA winner</td><td>: '+data.rates.winnerAPercent+'%</td></tr>'+'<tr><td>Draw</td><td>: '+data.rates.drawPercent+'%</td></tr>'+'<tr><td>TeamB winner</td><td>: '+data.rates.winnerBPercent+'%</td></tr></table>',
+                            content: '<table><tr><td>Number of players</td><td>: '+answer.data.rates.nbBets +'</td></tr><tr><td>TeamA winner</td><td>: '+data.rates.winnerAPercent+'%</td></tr>'+'<tr><td>Draw</td><td>: '+data.rates.drawPercent+'%</td></tr>'+'<tr><td>TeamB winner</td><td>: '+data.rates.winnerBPercent+'%</td></tr></table>',
                             placement: attrs.popoverPlacement});
                         $(el).popover('show');
 
-                    })
-                    .error(function(data, status, headers, config) {
+                    },
+                    function(data, status, headers, config) {
                         if (status==-1) {
                             //do nothing
                         }else {
@@ -66,8 +66,8 @@ betApp.controller('BetsCtrl', ['$scope', '$routeParams', '$http', '$q', '$locati
             if (isConnected($window)) {
                 //$http.get('communities/apiv1.0/communities/'+ com_id + '/users/'+ getConnectedUser($window).user_id +'/bets ', {timeout: canceler.promise})
                 $http.get('communities/apiv1.0/communities/'+ $routeParams.com_id + '/users/'+ getConnectedUser($window).user_id +'/bets ', {timeout: canceler.promise})
-                .success(function(data, status, headers, config) {
-                    $scope.bets = data;
+                .then(function(answer, status, headers, config) {
+                    $scope.bets = answer.data;
 
                     // to disable the input fields in the form
                     $scope.displaySaveButton = false;
@@ -85,8 +85,8 @@ betApp.controller('BetsCtrl', ['$scope', '$routeParams', '$http', '$q', '$locati
 
                     $scope.gaugeUpdate($scope.bets.bets)
 
-                })
-                .error(function(data, status, headers, config) {
+                },
+                function(data, status, headers, config) {
                     if (status==-1) {
                         //do nothing
                     }else {
@@ -119,12 +119,12 @@ betApp.controller('BetsCtrl', ['$scope', '$routeParams', '$http', '$q', '$locati
             $('#pleaseWaitDialog').modal('show');
 
             $http.put('communities/apiv1.0/communities/'+ $routeParams.com_id + '/users/'+ getConnectedUser($window).user_id +'/bets ', {bets: $scope.bets.bets, timeout: canceler.promise})
-            .success(function(data, status, headers, config) {
+            .then(function(answer, status, headers, config) {
                 //showAlertSuccess("Paris sauvegardés !");
                 $.notify("Bets saved !" , "success");
                 $('#pleaseWaitDialog').modal('hide');
-            })
-            .error(function(data, status, headers, config) {
+            },
+            function(data, status, headers, config) {
                 if (status==-1) {
                     //do nothing
                 } else if (status==403){
