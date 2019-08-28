@@ -37,33 +37,6 @@
         </div>
 
         <div class="row">
-            <div class="col-xs-12 col-md-3">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <div class="pull-left">
-                                <h4>Bettors</h4>
-                            </div>
-                            <div class="pull-right"></div>
-                            <div class="clearfix"></div>
-                        </h4>
-                    </div>
-                    <div class="panel-body">
-
-                        <div id="no-more-tables" class="table-responsive">
-                            <table class="table table-condensed table-striped">
-
-                                <tbody ng-init="getPlayersInCommunity();">
-                                <tr ng-repeat="player in players.data.players | orderBy:sortType:sortReverse">
-                                    <td data-title="Bettor"><img height="32px" width="32px" class="img-circle" ng-src ="users/apiv1.0/users/{{ player.user_id }}/avatar?{{ currentDateForAvoidTheCache }}" > {{player.nickName}}</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
             <div class="col-xs-12 col-md-9">
                 <div class="panel panel-default">
                     <div class="panel-heading">
