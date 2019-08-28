@@ -327,7 +327,7 @@ betApp.controller('CommunitiesCtrl', ['$scope', '$routeParams', '$http', '$q', '
         // only the connected people can create/delete/modify a community
         $scope.isConnected = function() {
             // security.js :
-            console.log("isConnected = ",getConnectedUser($window));
+            //console.log("isConnected = ",getConnectedUser($window));
             return isConnected($window);
         }
 
