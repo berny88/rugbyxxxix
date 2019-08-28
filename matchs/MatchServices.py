@@ -3,8 +3,6 @@ from flask import Blueprint, jsonify, request, session
 from bson.objectid import ObjectId
 import logging
 import math
-import sendgrid
-from sendgrid.helpers.mail import *
 from tools.Tools import DbManager, ToolManager
 from users.UserServices import UserManager
 from bets.BetsServices import BetsManager
@@ -80,6 +78,7 @@ class Match:
        "resultB": "",
        "category": "GROUPE",
        "categoryName": "GROUPEE"
+       "alreadyCalculated":0
     """""
     def __init__(self):
         self.key = u""
@@ -91,6 +90,7 @@ class Match:
         self.resultB=-1
         self.category = u""
         self.categoryName = u""
+        self.alreadyCalculated = False
 
 
     def convertFromBson(self, elt):
@@ -197,8 +197,9 @@ class MatchsManager(DbManager):
         return result
 
 
-    def update_all_matchs(self, matchs_to_update, no_save):
+    def update_all_matchs(self, matchs_to_update, no_save, forceAllMatch):
         #load all match from db (because we just want to update result
+        #forceAllMatch if we want to store all matchs
         logger.info(u"update_all_matchs::start-before getAllMatchs")
         matchs = self.getAllMatchs()
         logger.info(u"update_all_matchs::end getAllMatchs")
@@ -208,55 +209,45 @@ class MatchsManager(DbManager):
         betList = bet_mgr.get_all_bets()
         logger.info(u"update_all_matchs::end get_all_bets")
         for m in matchs:
-            match = Match()
-            match.convertFromBson(m)
-            match_key=match.key
-            #quick filter !! i love python
-            unique_match_list = [x for x in matchs_to_update if x["key"] == match_key]
-            match_dict=unique_match_list[0]
-            if match_dict is not None:
-                match.resultA = match_dict["resultA"]
-                match.resultB = match_dict["resultB"]
-                if not no_save:
-                    # mettre à jour juste les resultats
-                    logger.info(u'\tupdate_all_matchs::try update match["key" : {}] with match={}'.format(match_key, match_dict))
-                    result = self.getDb().matchs.update_one({"key": match_key},
-                                         {"$set": {"resultA": match_dict["resultA"],
-                                                   "resultB": match_dict["resultB"]}}, upsert=True)
-                    nb_hits = nb_hits + result.matched_count
+            #update match only if never wrote or if we force 
+            if ( not m.alreadyCalculated or forceAllMatch):
+                match = Match()
+                match.convertFromBson(m)
+                match_key=match.key
+                #quick filter !! i love python
+                unique_match_list = [x for x in matchs_to_update if x["key"] == match_key]
+                match_dict=unique_match_list[0]
+                if match_dict is not None:
+                    match.resultA = match_dict["resultA"]
+                    match.resultB = match_dict["resultB"]
+                    if not no_save:
+                        # mettre à jour juste les resultats
+                        logger.info(u'\tupdate_all_matchs::try update match["key" : {}] with match={}'.format(match_key, match_dict))
+                        match.alreadyCalculated=True
+                        result = self.getDb().matchs.update_one({"key": match_key},
+                                            {"$set": {"resultA": match_dict["resultA"],
+                                                    "resultB": match_dict["resultB"]}}, upsert=True)
+                        nb_hits = nb_hits + result.matched_count
+                    else:
+                        logger.info("no match updated")
                 else:
-                    logger.info("no match updated")
-            else:
-                logger.warn(u'\tmatch notfound in matchs_to_update["key" : {}]'.format(match_key))
+                    logger.warn(u'\tmatch notfound in matchs_to_update["key" : {}]'.format(match_key))
 
-            # pour chaque match demander à betmanager de calculer le nb de points de chq bet
-            # le principe sera de calculer le nbde pts d'un user = somme de ses paris
-            shortList = [b for b in betList if b.key == m["key"]]
-            for bet in shortList:
-                match.computeResult(bet)
-                logger.info(
-                    u'\t\tupdate_all_matchs::bet={}/{} - nbpts={}'.format(bet.key, bet.user_id, bet.nbpoints))
-                bets_for_mail.append(self.format_bet(bet, match))
+                # pour chaque match demander à betmanager de calculer le nb de points de chq bet
+                # le principe sera de calculer le nbde pts d'un user = somme de ses paris
+                #except if we force - we update only a match
+                shortList = [b for b in betList if b.key == m["key"]]
+                for bet in shortList:
+                    match.computeResult(bet)
+                    logger.info(
+                        u'\t\tupdate_all_matchs::bet={}/{} - nbpts={}'.format(bet.key, bet.user_id, bet.nbpoints))
+                    bets_for_mail.append(self.format_bet(bet, match))
 
         if not no_save:
             for bet in betList:
                 logger.info("bet update")
                 bet_mgr.saveScore(bet)
 
-        from_email = Email("eurommxvi.foot@gmail.com")
-        to_email = Email("eurommxvi.foot@gmail.com")
-        subject = "phipha2018 - bets saved"
-        head = u"<html><head></head><body><table border='1'><tr><td>m.key</td><td>teamA</td><td>teamB</td><td>resultA</td>"
-        head=head+u"<td>resultB</td><td>&nbsp;</td><td>bet.key</td><td>com_id</td><td>user_id</td>"
-        head=head+u"<td>bet.resultA</td><td>bet.resultB</td><td>bet.nbpoints</td></tr>"
-        content = Content("text/html", head+"\n".join(bets_for_mail)+"</table></body></html>")
-        mail = Mail(from_email, subject, to_email, content)
-        tool = ToolManager()
-        sg = tool.get_sendgrid()
-        response = sg.client.mail.send.post(request_body=mail.get())
-        print(response.status_code)
-        print(response.body)
-        print(response.headers)
 
         return None
 
