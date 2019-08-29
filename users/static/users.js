@@ -127,7 +127,7 @@ betApp.controller('UserDetailCtrl', ['$scope', '$http', '$q', '$routeParams', '$
             console.log(answer.data.communities);
             console.log(answer.data.communities.communities);
             if (answer.data.communities.communities.length!=0){
-                $scope.communities = data.communities.communities;
+                $scope.communities = answer.data.communities.communities;
             }else{
                 $scope.communities=[];
             }
