@@ -71,8 +71,8 @@ betApp.controller('UserDetailCtrl', ['$scope', '$http', '$q', '$routeParams', '$
             currentUser = getConnectedUser($window);
         }
         $scope.firstConnection = $routeParams.firstConnection;
-        console.log($scope);
-        console.log("$scope.firstConnection=" + $scope.firstConnection);
+        //console.log($scope);
+        //console.log("$scope.firstConnection=" + $scope.firstConnection);
         if ($scope.user == undefined){
             $scope.user={user_id:"xx"}
         }
@@ -94,7 +94,9 @@ betApp.controller('UserDetailCtrl', ['$scope', '$http', '$q', '$routeParams', '$
         $http.post('/users/apiv1.0/users/'+$routeParams.user_id, {user:$scope.user, timeout: canceler.promise})
         .then(function(answer, status, headers, config) {
             $scope.user = answer.data.user;
-            $location.path("#!/users")
+            console.log("save ok", answer.data.user);
+            console.log("redirect to /users from ",$location.path())
+            $location.path("/users")
             $timeout(function() {
                 if ($routeParams.firstConnection) {
                     showAlertSuccess("Welcome " + $scope.user.nickName + " ! Click <a href='#!/signin'>here</a> to log in.");
