@@ -375,11 +375,11 @@ class BetsManager(DbManager):
         #   48 = nb de match au total en poule, 16 = nb de match au total en phase finale, et 64 = nb match total
         #   13 = nb de pt max par match
         if category == "ALL" or category is None or category == "undefined":
-            nbMaxMatchs= 64
+            nbMaxMatchs= 48
         elif category == "GROUPE":
-            nbMaxMatchs = 48
+            nbMaxMatchs = 40
         elif category == "FINAL":
-            nbMaxMatchs = 16
+            nbMaxMatchs = 8
         ranking["nbPointsPercent"] = int((ranking["nbPoints"] * 100) / (nbMaxMatchs * 13))
         ranking["user"] = user
         ranking["communities"] = communitiesTab
