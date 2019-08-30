@@ -206,15 +206,16 @@ class MatchsManager(DbManager):
         matchs = self.getAllMatchs()
         logger.info(u"update_all_matchs::end getAllMatchs")
         nb_hits=0
-        bets_for_mail = list()
+        user_bets_to_save = list()
         bet_mgr = BetsManager()
         betList = bet_mgr.get_all_bets()
         logger.info(u"update_all_matchs::end get_all_bets")
+        #loop on repository of games
         for m in matchs:
-            logger.info(u"m={}".format(m))
-            #update match only if never wrote or if we force 
+            logger.info(u"update_all_matchs::m={}".format(m))
             match = Match()
             match.convertFromBson(m)
+            #update match only if never wrote or if we force 
             if ( (not match.alreadyCalculated) or (forceAllMatch)):
                 match_key=match.key
                 #quick filter !! i love python
@@ -223,32 +224,38 @@ class MatchsManager(DbManager):
                 if match_dict is not None:
                     match.resultA = match_dict["resultA"]
                     match.resultB = match_dict["resultB"]
-                    if not no_save:
-                        # mettre à jour juste les resultats
-                        logger.info(u'\tupdate_all_matchs::try update match["key" : {}] with match={}'.format(match_key, match_dict))
-                        match.alreadyCalculated=True
-                        result = self.getDb().matchs.update_one({"key": match_key},
-                                            {"$set": {"resultA": match_dict["resultA"],
-                                                    "resultB": match_dict["resultB"]}}, upsert=True)
-                        nb_hits = nb_hits + result.matched_count
+                    if ( (match.resultA is not None) and (match.resultB is not None)):
+                        if not no_save:
+                            # mettre à jour juste les resultats
+                            logger.info(u'update_all_matchs::\ttry update match["key" : {}] with match={}'.format(match_key, match_dict))
+                            match.alreadyCalculated=True
+                            result = self.getDb().matchs.update_one({"key": match_key},
+                                                {"$set": {"resultA": match_dict["resultA"],
+                                                        "resultB": match_dict["resultB"],
+                                                        "alreadyCalculated":True}}, upsert=True)
+                            nb_hits = nb_hits + result.matched_count
+                            # pour chaque match demander à betmanager de calculer le nb de points de chq bet
+                            # le principe sera de calculer le nbde pts d'un user = somme de ses paris
+                            #except if we force - we update only a match
+                            shortList = [b for b in betList if b.key == m["key"]]
+                            for bet in shortList:
+                                match.computeResult(bet)
+                                logger.info(
+                                    u'\t\tupdate_all_matchs::bet={}/{} - nbpts={}'.format(bet.key, bet.user_id, bet.nbpoints))
+                                user_bets_to_save.append(bet)
+                        else:
+                            logger.info("\tno match updated")
                     else:
-                        logger.info("no match updated")
+                        logger.info("\t no match updated because no result entered")
                 else:
                     logger.warn(u'\tmatch notfound in matchs_to_update["key" : {}]'.format(match_key))
+            else:
+                logger.info("\t game already entered - nothing to do.")
 
-                # pour chaque match demander à betmanager de calculer le nb de points de chq bet
-                # le principe sera de calculer le nbde pts d'un user = somme de ses paris
-                #except if we force - we update only a match
-                shortList = [b for b in betList if b.key == m["key"]]
-                for bet in shortList:
-                    match.computeResult(bet)
-                    logger.info(
-                        u'\t\tupdate_all_matchs::bet={}/{} - nbpts={}'.format(bet.key, bet.user_id, bet.nbpoints))
-                    bets_for_mail.append(self.format_bet(bet, match))
 
         if not no_save:
-            for bet in betList:
-                logger.info("bet update")
+            for bet in user_bets_to_save:
+                logger.info("bet update={}".format (bet))
                 bet_mgr.saveScore(bet)
 
 
