@@ -39,15 +39,15 @@
         <div class="alert alert-success" role="alert">
             Your choice :
             <div class="btn-group" role="group" aria-label="...">
-                <button id="btn-groupe" type="button" class="btn btn-success" ng-click="getRankingInCommunity('GROUPE')">Ranking and bets of the group phase</button>
-                <button id="btn-final" type="button" class="btn btn-success active" ng-click="getRankingInCommunity('FINAL');">Ranking and bets of the knockout phase</button>
+                <button id="btn-groupe" type="button" class="btn btn-success active" ng-click="getRankingInCommunity('GROUPE')">Ranking and bets of the group phase</button>
+                <button id="btn-final" type="button" class="btn btn-success" ng-click="getRankingInCommunity('FINAL');">Ranking and bets of the knockout phase</button>
                 <button id="btn-all" type="button" class="btn btn-success" ng-click="getRankingInCommunity('ALL');">Overall ranking and bets</button>
             </div>
         </div>
 
         <br/>
 
-        <div class="container-fluid" ng-init="getRankingInCommunity('FINAL')">
+        <div class="container-fluid" ng-init="getRankingInCommunity('GROUPE')">
             <div class="row">
                 <div class="col-md-12">
 
@@ -81,7 +81,7 @@
                                         </div>
                                      </div>
                                     <center><span id="spinRanking"><img src="static/img/spin.gif"></span></center>
-                                    <center><a href="#stats_ranking"><i class="fas fa-chart-bar" aria-hidden="true"></i>&nbsp;General ranking</a></center>
+                                    <!--center><a href="!#/stats_ranking"><i class="fas fa-chart-bar" aria-hidden="true"></i>&nbsp;General ranking</a></center-->
                                 </div>
                             </div>
                         </div>
@@ -156,7 +156,7 @@
 
                             <center><span id="spin3"><img src="static/img/spin.gif"></span></center>
                             <div class="ct-chart ct-chart-line"></div>
-                            <center><a href="#stats_historyranking"><i class="fas fa-chart-bar" aria-hidden="true"></i>&nbsp;History of the general ranking</a></center>
+                            <!--center><a href="!#/stats_historyranking"><i class="fas fa-chart-bar" aria-hidden="true"></i>&nbsp;History of the general ranking</a></center-->
 
                         </div>
                     </div>
