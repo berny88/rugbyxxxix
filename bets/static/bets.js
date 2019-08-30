@@ -12,7 +12,7 @@ betApp.directive('customPopover', function ($http,$timeout) {
                             trigger: 'focus',
                             html:true,
                             title: 'Trends',
-                            content: '<table><tr><td>Number of players</td><td>: '+answer.data.rates.nbBets +'</td></tr><tr><td>TeamA winner</td><td>: '+data.rates.winnerAPercent+'%</td></tr>'+'<tr><td>Draw</td><td>: '+data.rates.drawPercent+'%</td></tr>'+'<tr><td>TeamB winner</td><td>: '+data.rates.winnerBPercent+'%</td></tr></table>',
+                            content: '<table><tr><td>Number of players</td><td>: '+answer.data.rates.nbBets +'</td></tr><tr><td>TeamA winner</td><td>: '+answer.data.rates.winnerAPercent+'%</td></tr>'+'<tr><td>Draw</td><td>: '+answer.data.rates.drawPercent+'%</td></tr>'+'<tr><td>TeamB winner</td><td>: '+answer.data.rates.winnerBPercent+'%</td></tr></table>',
                             placement: attrs.popoverPlacement});
                         $(el).popover('show');
 

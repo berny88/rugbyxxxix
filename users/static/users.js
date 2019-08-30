@@ -209,11 +209,11 @@ betApp.controller('LoginCtrl', ['$scope', '$http', '$q', '$routeParams', '$locat
                 $.notify("Welcome "+answer.data.user.nickName +" !!" , "success");
             },
             function(data, status, headers, config) {
-                if (status==-1) {
+                if (data.status==-1) {
                     //do nothing
-                } else if (status==404){
+                } else if (data.status==404){
                     showAlertError("Ben, tu veux allez en vrai ? : status=" + status);
-                }else if (status==401){
+                }else if (data.status==401){
                     showAlertError("Bad login/password, try again !");
                 }else{
                     showAlertError("Erreur lors de connexion ; erreur HTTP : " + status + " " + data);
