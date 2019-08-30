@@ -50,7 +50,7 @@ def updateMatchsResults():
         logger.info(u"updateMatchsResults::update by ={}".format(user.email))
         nbHit=0
         if user.isAdmin:
-            nbHit = mgr.update_all_matchs(matchsjson, no_save)
+            nbHit = mgr.update_all_matchs(matchsjson, no_save, False)
         else:
             logger.info(u"updateMatchsResults::No Admin = 403")
             return "Ha ha ha ! Mais t'es pas la bonne personne pour faire ça, mon loulou", 403
@@ -104,7 +104,9 @@ class Match:
                 self._id = str(elt[k])
             else:
                 self.__dict__[k] = elt[k]
-
+        #if not "alreadyCalculated" in self.__dict__.keys():
+            #self.__dict__["alreadyCalculated"] = False
+            #logger.info ("add alreadyCalculated")
 
     def convertIntoBson(self):
         u"""
@@ -209,10 +211,11 @@ class MatchsManager(DbManager):
         betList = bet_mgr.get_all_bets()
         logger.info(u"update_all_matchs::end get_all_bets")
         for m in matchs:
+            logger.info(u"m={}".format(m))
             #update match only if never wrote or if we force 
-            if ( not m.alreadyCalculated or forceAllMatch):
-                match = Match()
-                match.convertFromBson(m)
+            match = Match()
+            match.convertFromBson(m)
+            if ( (not match.alreadyCalculated) or (forceAllMatch)):
                 match_key=match.key
                 #quick filter !! i love python
                 unique_match_list = [x for x in matchs_to_update if x["key"] == match_key]
