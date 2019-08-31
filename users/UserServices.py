@@ -214,13 +214,13 @@ def saveAvatar(user_id):
             data = file.read()
             file.close()
 
-            # check the length (500Ko max)
-            if len(data) < 500000:
+            # check the length (100Ko max)
+            if len(data) < 100000:
                 mgr = UserManager()
                 avatarId = mgr.saveAvatar(user_id, data)
                 return "Yes !", 200
             else:
-                return "Size of the file ("+str(len(data))+" ko) more than 500 Ko", 415
+                return "Size of the file ("+str(len(data))+" ko) more than 100 Ko", 415
         else:
             return "Non supported file (jpg/jpeg mandatory)", 413
     else:
