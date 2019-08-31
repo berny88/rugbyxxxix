@@ -165,18 +165,18 @@ betApp.controller('UserDetailCtrl', ['$scope', '$http', '$q', '$routeParams', '$
             $.notify("Avatar saved !!" , "success");
         },
         function(answer, status, headers, config) {
-            if (status==-1) {
+            if (answer.status==-1) {
                 //do nothing
-            } else if (status==403){
-                showAlertError("Même pas en rêve ! status=" + status+ " " + answer);
-            }else if (status==413){
-                showAlertError("Problem with your file : " + answer);
+            } else if (answer.status==403){
+                showAlertError("Même pas en rêve ! status=" + answer.status+ " " + answer.data);
+            }else if (answer.status==413){
+                showAlertError("Problem with your file : " + answer.data);
                 $.notify("Avatar saving error !!" , "error");
-            }else if (status==415){
-                showAlertError("Problem with your file  : " + answer);
+            }else if (answer.status==415){
+                showAlertError("Problem with your file  : " + answer.data);
                 $.notify("Avatar saving error !!" , "error");
             }else{
-                showAlertError("Avatar saving error ; erreur HTTP : " + status);
+                showAlertError("Avatar saving error ; erreur HTTP : " + answer.status);
             }
         });
 
