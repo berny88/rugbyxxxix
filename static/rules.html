@@ -21,13 +21,25 @@
   <div class="jumbotron rule_jumbo_2">
     <h2 class="lead">Calculation of points</h2>
     <ul>
-      <li>If the bettor has found the winner (or guessed a draw): 5 points.</li>
-      <li>3 points if the bettor has guessed the number of points of a team.</li>
-      <li>3 points if the bettor guessed the good difference of points between the 2 teams (no matter the winner).</li>
-      <li>2 points if the bettor has guessed a difference of points (between his bet and the match) between 1 (incl) and 5 points (incl).</li>
-      <li>1 point if the bettor has guessed a difference of points (between his bet and the match) between 6 (incl) and 10 points (incl).</li>
+      <li>If the bettor has found the winner (or guessed a draw): +5 points.</li>
+      <li>+3 points if the bettor has guessed the number of points of a team.</li>
+      <li>+3 points if the bettor guessed the good difference of points between the 2 teams (no matter the winner).<br>
+      &nbsp;&nbsp;&nbsp;or +2 points if the bettor has guessed a difference of points (between his bet and the match) between 1 (incl) and 5 points (incl).<br>
+      &nbsp;&nbsp;&nbsp;or +1 point if the bettor has guessed a difference of points (between his bet and the match) between 6 (incl) and 10 points (incl).</li>
+      <br>
       <li>Therefore, for each match, a bettor can collect 5 + (3 + 3) + 3 points = 14 points if he guesses the exact result of the match.</li>
       <!--<li style="color:red;">Achtung : for the final phase, the score <b> at the end of extra time </b> (if any) will be taken into account (penalties are not counted). There may therefore be draws.</li>-->
+      <li>Example: TeamA vs TeamB : 12 - 5
+        <ul>
+          <li>Bet : 12 - 5 => 14 pts (5 + 3 + 3 + 3) won</li>
+          <li>Bet : 5 - 12 => 3 pts won</li>
+          <li>Bet : 12 - 10 => 10 pts (5 + 3 + 2) won</li>
+          <li>Bet : 12 - 6 => 9 pts (5 + 3 + 1) won</li>
+          <li>Bet : 12 - 0 => 8 pts (5 + 3) won</li>
+          <li>Bet : 10 - 0 => 6 pts (5 + 1) won</li>
+          <li>Bet : 11 - 4 => 8 pts (5 + 3) won</li>
+        </ul>
+      </li>
     </ul>
   </div>
   <div class="jumbotron rule_jumbo_2">
