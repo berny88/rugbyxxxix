@@ -124,10 +124,12 @@ class Match:
 
     def computeResult(self, bet):
         u"""
-            Si le parieur a trouvé le vainqueur (ou deviné un match nul) : 5 points
-            3 points si le parieur a deviné le nombre de point d'une équipe
-            2 points si le parieur a deviné la bonne différence de points entre les 2 équipes (peu importe le vainqueur)
-            Donc, pour chaque match, un parieur peut récolter 5 + 6 + 2 points = 13 points s'il devine le résultat exact du match
+        <li>If the bettor has found the winner (or guessed a draw): 5 points</li>
+        <li>3 points if the bettor has guessed the number of points of a team</li>
+        <li>3 points if the bettor guessed the good difference of points between the 2 teams (no matter the winner)</li>
+        <li>2 points if the bettor has guessed a difference of points (between his bet and the match) less than 5 points (no matter the winner)</li>
+        <li>1 point if the bettor has guessed a difference of points (between his bet and the match) less than 10 points (no matter the winner)</li>
+        <li>Therefore, for each match, a bettor can collect 5 + (3 + 3) + 3 points = 14 points if he guesses the exact result of the match.</li>
         """
         nb_point=0
 
@@ -146,7 +148,9 @@ class Match:
 
     #str_nb=tool.getProperty(key="NB_POINT_DIFF")["value"]
         #   if str_nb=="":
-        NB_POINT_DIFF=2
+        NB_POINT_EXACT_DIFF=3
+        NB_POINT_FIVE_DIFF=2
+        NB_POINT_TEN_DIFF=1
         #else:
     #    NB_POINT_DIFF=int(str_nb)
 
@@ -154,16 +158,22 @@ class Match:
         logger.info(u'\tMatchs::computeResult={}'.format(self.key, bet.key))
         if (self.key==bet.key):
             if (bet.resultA!="") and (bet.resultB!="") and (self.resultA!="") and (self.resultB!="") and  (bet.resultA is not None) and (bet.resultB is not None) and (self.resultA is not None) and (self.resultB is not None):
-                logger.info(u'\t\tMatchs::computeResult=bet.resA={} - self.resA={}'.format(bet.resultA,self.resultA))
-                logger.info(u'\t\tMatchs::computeResult=bet.resA={} - self.resA={}'.format(bet.resultB,self.resultB))
+                logger.info(u'\t\tMatchs::computeResult=bet.resA={} - self.resA(reference)={}'.format(bet.resultA,self.resultA))
+                logger.info(u'\t\tMatchs::computeResult=bet.resA={} - self.resA(reference)={}'.format(bet.resultB,self.resultB))
                 #3 points si le parieur a deviné le nombre de point d'une équipe
                 if bet.resultA==self.resultA:
                     nb_point=nb_point+NB_POINT_TEAM
                 if bet.resultB == self.resultB:
                     nb_point = nb_point + NB_POINT_TEAM
                 # 2 points si le parieur a deviné la bonne différence de points entre les 2 équipes (peu importe le vainqueur)
-                if math.fabs(self.resultA-self.resultB) == math.fabs(bet.resultA-bet.resultB):
-                    nb_point = nb_point + NB_POINT_DIFF
+                diff_reference = math.fabs(self.resultA-self.resultB)
+                diff_match_to_compute = math.fabs(bet.resultA-bet.resultB)
+                if (diff_reference-diff_match_to_compute)==0:
+                    nb_point = nb_point + NB_POINT_EXACT_DIFF
+                elif math.fabs(diff_reference-diff_match_to_compute)<=5:
+                    nb_point = nb_point + NB_POINT_FIVE_DIFF
+                elif math.fabs(diff_reference-diff_match_to_compute)>5 and math.fabs(diff_reference-diff_match_to_compute)<=10:
+                    nb_point = nb_point + NB_POINT_TEN_DIFF
                 #5 pts if 1N2
                 if  (((self.resultA-self.resultB) >0 and (bet.resultA-bet.resultB)>0) or
                     ((self.resultA - self.resultB) < 0 and (bet.resultA - bet.resultB) < 0) or
