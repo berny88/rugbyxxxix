@@ -1,1 +1,15 @@
 bet.log
+tools/__pycache__/__init__.cpython-37.pyc
+__pycache__/application.cpython-37.pyc
+bets/__pycache__/__init__.cpython-37.pyc
+bets/__pycache__/BetsServices.cpython-37.pyc
+chat/__pycache__/ChatServices.cpython-37.pyc
+communities/__pycache__/__init__.cpython-37.pyc
+communities/__pycache__/BlogsServices.cpython-37.pyc
+communities/__pycache__/CommunityServices.cpython-37.pyc
+matchs/__pycache__/__init__.cpython-37.pyc
+matchs/__pycache__/MatchServices.cpython-37.pyc
+stats/__pycache__/StatsServices.cpython-37.pyc
+tools/__pycache__/Tools.cpython-37.pyc
+users/__pycache__/__init__.cpython-37.pyc
+users/__pycache__/UserServices.cpython-37.pyc
