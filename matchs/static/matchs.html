@@ -48,7 +48,7 @@
                         </tr>
                     </thead>
                     <tbody ng-init="getMatchs();">
-                        <tr ng-class="{ 'danger' : (match.resultA==null || match.resultB==null)}" ng-repeat="match in matchs | filter : match_filter | orderBy:sortType:sortReverse">
+                        <tr ng-class="{ 'danger' : (match.resultA==null || match.resultB==null || match.resultA=='' || match.resultB=='')}" ng-repeat="match in matchs | filter : match_filter | orderBy:sortType:sortReverse">
                             <td data-title="Date">{{match.dateMatch | date:'dd/MM/yy HH:mm'}}</td>
                             <td data-title="Group">{{match.categoryName}}</td>
                             <td data-title="TeamA"><span class="newflags {{match.teamA}}"></span> {{match.libteamA}}</td>
