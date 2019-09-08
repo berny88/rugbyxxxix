@@ -408,9 +408,14 @@ class BetsManager(DbManager):
         result = dict()
         result["key"] = key
         result["nbBets"] = nbBets
-        result["winnerAPercent"] = int(winnerA * 100 / nbBets)
-        result["drawPercent"] = int(draw * 100 / nbBets)
-        result["winnerBPercent"] = 100 - result["winnerAPercent"] - result["drawPercent"]
+        if nbBets == 0:
+            result["winnerAPercent"] = 0
+            result["drawPercent"] = 0
+            result["winnerBPercent"] = 0
+        else:
+            result["winnerAPercent"] = int(winnerA * 100 / nbBets)
+            result["drawPercent"] = int(draw * 100 / nbBets)
+            result["winnerBPercent"] = 100 - result["winnerAPercent"] - result["drawPercent"]
 
         return result
 
