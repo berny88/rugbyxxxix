@@ -73,6 +73,7 @@
     </div>
 </div>
 
+<!--
 <div ng-show="isConnected()" class=" jumbotron container-fluid">
     <div class="row-fluid">
 
@@ -82,7 +83,7 @@
                     <table class="table table-condensed table-striped">
                         <thead>
                         <tr>
-                            <!--<th class="id">Id</th>-->
+
                             <th class="title">
                                 <a ng-click="sortType='title';sortReverse=!sortReverse">Title<span ng-show="sortType=='title'&&!sortReverse" class="glyphicon glyphicon-chevron-down"></span><span ng-show="sortType=='title' && sortReverse" class="glyphicon glyphicon-chevron-up"></span></a>
                             </th>
@@ -92,15 +93,15 @@
                         </thead>
                         <tbody ng-init="getMyCommunities();">
                         <tr ng-repeat="community in my_communities.communities | orderBy:sortType:sortReverse">
-                            <!--<td>{{community.com_id}}</td>-->
+
                             <td data-title="Title">{{community.title}}</td>
                             <td data-title="Desc.">{{community.description}}</td>
                             <td>
-                                <span><a class="btn btn-warning" href="#bets_of_the_day_in_community/{{community.com_id}}"><i class="glyphicon glyphicon-fire" aria-hidden="true"></i> Hot !</a></span>
-                                <span><a class="btn btn-danger" href="#bet_in_community/{{community.com_id}}"><i class="fas fa-coins" aria-hidden="true"></i> Bet !</a></span>
-                                <span><a class="btn btn-success" href="#rank_in_community/{{community.com_id}}"><i class="fas fa-chart-line" aria-hidden="true"></i> Ranking</a></span>
-                                <span><a class="btn btn-primary" href="#bets_in_community/{{community.com_id}}"><i class="fas fa-dice" aria-hidden="true"></i> Our bets</a></span>
-                                <span><a class="btn btn-info" href="#blog_in_community/{{community.com_id}}"><i class="glyphicon glyphicon-bullhorn"></i> Blog</a></span>
+                                <span><a class="btn btn-warning" href="#!/bets_of_the_day_in_community/{{community.com_id}}"><i class="glyphicon glyphicon-fire" aria-hidden="true"></i> Hot !</a></span>
+                                <span><a class="btn btn-danger" href="#!/bet_in_community/{{community.com_id}}"><i class="fas fa-coins" aria-hidden="true"></i> Bet !</a></span>
+                                <span><a class="btn btn-success" href="#!/rank_in_community/{{community.com_id}}"><i class="fas fa-chart-line" aria-hidden="true"></i> Ranking</a></span>
+                                <span><a class="btn btn-primary" href="#!/bets_in_community/{{community.com_id}}"><i class="fas fa-dice" aria-hidden="true"></i> Our bets</a></span>
+                                <span><a class="btn btn-info" href="#!/blog_in_community/{{community.com_id}}"><i class="glyphicon glyphicon-bullhorn"></i> Blog</a></span>
                             </td>
                         </tr>
                         </tbody>
@@ -112,6 +113,7 @@
 
     </div>
 </div>
+-->
 
 <div ng-show="!isConnected()" class="container-fluid">
     <!--div class=" jumbotron container-fluid">
@@ -129,7 +131,7 @@
     <div class="row">
         <div class="col-sm-6">
             <center>
-                <a href="#signin">
+                <a href="#!/signin">
                     <img class="img-focus img-circle img-responsive img-center" src="/static/img/france-champion-europe-1984.jpg" alt="">
                     <h2>Log in !</h2>
                 </a>
@@ -137,7 +139,7 @@
         </div>
         <div class="col-sm-6">
             <center>
-                 <a href="#signon">
+                 <a href="#!/signon">
                     <img class="img-focus img-circle img-responsive img-center" src="/static/img/mondial98.jpg" alt="">
                     <h2>Sign up !</h2>
                 </a>

@@ -5,10 +5,10 @@ betApp.config(function($routeProvider) {
     $routeProvider
 
         // route for index
-        .when('/accueil', { templateUrl:'static/accueil.html', controller:'CommunitiesCtrl' })
-        .when('/accueil2', { templateUrl:'static/accueil.html', controller:'CommunitiesCtrl' })
-        .when('/accueil3', { templateUrl:'static/accueil.html', controller:'CommunitiesCtrl' })
-        .when('/', { templateUrl:'static/accueil.html', controller:'CommunitiesCtrl' })
+        .when('/accueil', { templateUrl:'static/accueil2.html', controller:'CommunitiesCtrl' })
+        .when('/accueil2', { templateUrl:'static/accueil2.html', controller:'CommunitiesCtrl' })
+        .when('/accueil3', { templateUrl:'static/accueil2.html', controller:'CommunitiesCtrl' })
+        .when('/', { templateUrl:'static/accueil2.html', controller:'CommunitiesCtrl' })
 
         //subscription process
         // to subscribe to the site
@@ -68,5 +68,5 @@ betApp.config(function($routeProvider) {
         .when('/contact', { templateUrl:'static/contact.html', controller:'indexCtrl' })
 
         // default
-        .otherwise({ templateUrl:'static/accueil.html', controller:'CommunitiesCtrl' });
+        .otherwise({ templateUrl:'static/accueil2.html', controller:'CommunitiesCtrl' });
 });
