@@ -7,13 +7,13 @@
     <div class="alert alert-success" role="alert">
         Your choice :
         <div class="btn-group" role="group" aria-label="...">
-            <button id="btn-groupe" type="button" class="btn btn-success active" ng-click="getRanking('GROUPE');">Ranking of the group phase</button>
-            <button id="btn-final" type="button" class="btn btn-success" ng-click="getRanking('FINAL');">Ranking of the knockout phase</button>
+            <button id="btn-groupe" type="button" class="btn btn-success" ng-click="getRanking('GROUPE');">Ranking of the group phase</button>
+            <button id="btn-final" type="button" class="btn btn-success active" ng-click="getRanking('FINAL');">Ranking of the knockout phase</button>
             <button id="btn-all" type="button" class="btn btn-success" ng-click="getRanking('ALL');">Overall ranking</button>
         </div>
     </div>
 
-    <div id="divRanking" class="contentContainer" style="display:none" ng-init="getRanking('GROUPE')">
+    <div id="divRanking" class="contentContainer" style="display:none" ng-init="getRanking('FINAL')">
 
         <div class="skillBar" ng-repeat="ranking in rankings.data.rankings">
 

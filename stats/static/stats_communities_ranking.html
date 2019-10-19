@@ -9,13 +9,13 @@
     <div class="alert alert-success" role="alert">
             Your choice :
             <div class="btn-group" role="group" aria-label="...">
-                <button id="btn-groupe" type="button" class="btn btn-success active" ng-click="getCommunitiesRanking('GROUPE');">Ranking of the group phase</button>
-                <button id="btn-final" type="button" class="btn btn-success" ng-click="getCommunitiesRanking('FINAL');">Ranking of the knockout phase</button>
+                <button id="btn-groupe" type="button" class="btn btn-success" ng-click="getCommunitiesRanking('GROUPE');">Ranking of the group phase</button>
+                <button id="btn-final" type="button" class="btn btn-success active" ng-click="getCommunitiesRanking('FINAL');">Ranking of the knockout phase</button>
                 <button id="btn-all" type="button" class="btn btn-success" ng-click="getCommunitiesRanking('ALL');">Global ranking</button>
             </div>
         </div>
 
-        <div ng-init="getCommunitiesRanking('GROUPE')">
+        <div ng-init="getCommunitiesRanking('FINAL')">
 
             <center><span id="spin_communities_ranking"><img src="static/img/spin.gif"></span></center>
 
