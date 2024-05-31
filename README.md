@@ -3,8 +3,21 @@ small web bet site in python
 
 From Pythoneverywhere
 
-cd mysite
+To initialize git env
+
+* cd mysite
+
+* git init
+
+* git remote add origin https://github.com/yourusername/yourreponame.git
+
+* git pull https://github.com/yourusername/yourreponame.git master
+
+
+then
+
 git fetch bet
+
 git pull
 
 Forcer theBerny isAdmin : no secu
